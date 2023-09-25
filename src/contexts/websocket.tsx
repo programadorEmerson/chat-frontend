@@ -1,49 +1,35 @@
-"use client";
+'use client';
 
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 
+import { ApiService } from '@/services/api';
 import Websocket from '@/services/websocket';
 
+import { useUserContext } from '@/hooks/useUser';
+
 export interface WebsocketProps {
-  usersOnline: number;
   socketIo: Websocket | null;
-  testWebSocket: () => void;
 }
 
 const WebsocketContext = createContext({} as WebsocketProps);
 
 function WebsocketProvider({ children }: { children: ReactNode }) {
-  const [usersOnline, setUsersOnline] = useState(0);
   const [socketIo, setSocketIo] = useState<Websocket | null>(null);
-
-  const testWebSocket = () => {
-    if (socketIo) {
-      socketIo.testWebSocket();
-    }
-  };
+  const { user } = useUserContext();
 
   useEffect(() => {
-    setSocketIo(
-      new Websocket({ setUsersOnline }),
-    );
-  }, []);
+    if (user) {
+      const api = new ApiService();
+      const token = api.getApiToken();
+      setSocketIo(new Websocket({ user, token }));
+    }
+  }, [user]);
 
-  const shared = {
-    testWebSocket,
-    usersOnline,
-    socketIo,
-  };
+  const shared = useMemo(() => ({
+    socketIo
+  }), [socketIo]);
 
-  return (
-    <WebsocketContext.Provider value={shared}>
-      {children}
-    </WebsocketContext.Provider>
-  );
+  return <WebsocketContext.Provider value={shared}>{children}</WebsocketContext.Provider>;
 }
 
 export { WebsocketContext, WebsocketProvider };

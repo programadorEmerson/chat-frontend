@@ -1,50 +1,67 @@
-import { Dispatch, SetStateAction } from 'react';
 
 import { io } from 'socket.io-client';
 
-import { ApiService } from './api';
 import { ConstantsEnum } from '@/enums/constants.enum';
 
+import { UserInterface } from '@/interfaces/user.interface';
+
 interface WebsocketInterface {
-  setUsersOnline: Dispatch<SetStateAction<number>>;
+  user: UserInterface | null;
+  token: string;
 }
 
 class Websocket {
   private dataShared: WebsocketInterface;
 
   constructor(
-    dataShared: WebsocketInterface,
+    dataSocket: WebsocketInterface,
 
     private connection = io(`${process.env.NEXT_PUBLIC_API_URL}`, {
-      transports: ['websocket'],
+      transports : ['websocket'],
     }),
   ) {
-    this.dataShared = dataShared;
+    this.dataShared = dataSocket;
     this.initializeOnSocket();
   }
 
-  public testWebSocket = () => {
-    const api = new ApiService();
-    this.connection.emit(ConstantsEnum.CHECK_CHECK, {message: 'enviado'}, {
-      Headers: { Authorization: `Bearer ${api.getApiToken()}` },
-    });
+  public newUserOnline = (user: UserInterface) => {
+    const { token } = this.dataShared;
+    this.connection.emit(ConstantsEnum.NEW_USER_ONLINE,
+      { id : user.id },
+      { Headers : { Authorization : `Bearer ${token}` } },
+    );
   };
 
   private onUsersOnline = () => {
-    const refOn = ConstantsEnum.USERS_ONLINE;
-    this.connection.on(refOn, ({ usersOnline }: { usersOnline: number }) => {
-      const { setUsersOnline } = this.dataShared;
-      console.log('usersOnline', usersOnline)
-      setUsersOnline(usersOnline);
+    this.connection.on(ConstantsEnum.USERS_ONLINE, ({ usersOnline }: { usersOnline: number }) => {
+      console.log('usersOnline front: ', usersOnline);
     });
   };
 
-  private initializeOnSocket = () => {
+  private authenticatedEmitter = (user: UserInterface) => {
+    this.newUserOnline(user);
+
+    this.authenticatedListeners(user);
+  };
+
+  private authenticatedListeners = (user: UserInterface) => {
+    console.log('user: ', user);
     this.onUsersOnline();
-    if (this.dataShared) { 
-      // validar a chamada caso tenha algum valor a passar para o wws
-      this.testWebSocket();
+  };
+
+  private notAuthenticatedEmitter = () => {
+
+    this.notAuthenticatedListeners();
+  };
+
+  private notAuthenticatedListeners = () => {};
+
+  private initializeOnSocket = () => {
+    const { user } = this.dataShared;
+    if (user) {
+      this.authenticatedEmitter(user);
     }
+    this.notAuthenticatedEmitter();
   };
 }
 

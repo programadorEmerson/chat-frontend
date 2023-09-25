@@ -1,5 +1,5 @@
 interface TokenInterface {
-    id: Number;
+  id: number;
 }
 
 export default TokenInterface;

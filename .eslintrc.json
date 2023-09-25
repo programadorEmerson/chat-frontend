@@ -1,3 +1,113 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:react/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "eslint-plugin-import-helpers",
+    "unused-imports"
+  ],
+  "rules": {
+    "@typescript-eslint/no-misused-promises": 0,
+    "@typescript-eslint/no-floating-promises": 0,
+    "@typescript-eslint/consistent-type-assertions": 0,
+    "@typescript-eslint/strict-boolean-expressions": 0,
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "unused-imports/no-unused-imports": 2,
+    "react/prop-types": 0,
+    "no-console": 0,
+    "no-trailing-spaces": "error",
+    "react/react-in-jsx-scope": "off",
+    "eol-last": ["error", "always"],
+    "key-spacing": ["error", { "beforeColon": true }],
+    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
+    "react/jsx-max-props-per-line": ["error", { "when": "always" }],
+    "react/jsx-one-expression-per-line": [
+      "error",
+      {
+        "allow": "single-child"
+      }
+    ],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreComments": true,
+        "ignoreUrls": true
+      }
+    ],
+    "linebreak-style": ["error", "unix"],
+    "react/jsx-indent": ["error", 2],
+    "no-else-return": ["error"],
+    "object-curly-spacing": ["error", "always"],
+    "semi": ["warn", "always"],
+    "quotes": ["error", "single"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "indent": ["error", 2],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^react/",
+          "/^next/",
+          "/^axios/",
+          "/^date-fns/",
+          "/^@casl/",
+          "/^@emotion/",
+          "/^@mui/",
+          "/^faker/",
+          "/^formik/",
+          "/^nookies/",
+          "/^jwt-decode/",
+          "/^lodash/",
+          "/^query-string/",
+          "/^socket/",
+          "/^uuid/",
+          "/^yup/",
+          "/^@/pages/",
+          "/^@/services/",
+          "/^@/components/",
+          "/^@/context/",
+          "/^@/enums/",
+          "/^@/hooks/",
+          "/^@/models/",
+          "/^@/interfaces/",
+          "/^@/public/",
+          "/^@/schemas/",
+          "/^@/styles/",
+          "/^@/json/",
+          "/^@/types/",
+          "/^@/utils/",
+          ["module"],
+          ["/^~//"],
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ]
+  }
 }
