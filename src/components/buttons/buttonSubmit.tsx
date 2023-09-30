@@ -2,6 +2,8 @@ import React, { ButtonHTMLAttributes } from 'react';
 
 import { FormikProps } from 'formik';
 
+import { twMerge } from 'tailwind-merge';
+
 interface ButtonSubmitProps<T> extends ButtonHTMLAttributes<HTMLButtonElement> {
     formik: FormikProps<T>
 }
@@ -17,11 +19,11 @@ const ButtonSubmit: <T>(props: ButtonSubmitProps<T>) => JSX.Element = (props) =>
     <button
       {...props}
       type="submit"
-      className={`transition-all duration-300
-        w-full inline-flex justify-center bg-blue-500 
-        hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
-        ${(allTouch && disabled) && 'opacity-50 cursor-not-allowed'}
-      `}
+      className={twMerge(`transition-all duration-300
+      w-full inline-flex justify-center bg-blue-500 
+      hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
+      ${(allTouch && disabled) ? 'opacity-50 cursor-not-allowed' : ''}
+    `, props.className)}
     />
   );
 };

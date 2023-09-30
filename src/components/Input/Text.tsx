@@ -5,6 +5,10 @@ import { FormikProps } from 'formik';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
+import { twMerge } from 'tailwind-merge';
+
+import { ButtonShowPassword, ContainerButton, InputText } from './styles';
+
 interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
   formik: FormikProps<T>
   reference: keyof T & string
@@ -25,45 +29,22 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
   return (
     <div className='w-full inline-flex flex-col'>
       <div className='w-full inline-flex h-15'>
-        <input
+        <InputText
           {...props}
           id={reference}
           name={reference}
           value={value}
           onChange={handleChange}
+          isfildpassword={String(isFildPassword)}
           type={hidePassword ? 'password' : 'text'}
-          className={`
-          bg-gray-50 border border-gray-300 h-12
-          text-gray-900 text-sm ${isFildPassword ? 'rounded-l-lg' : 'rounded-lg'}
-          focus:ring-blue-500 focus:border-blue-500
-          block w-full p-2.5 dark:bg-gray-700
-          dark:border-gray-600 dark:placeholder-gray-400
-          dark:text-white dark:focus:ring-blue-500
-          dark:focus:border-blue-500`}
+          className={twMerge(props.className)}
         />
         {isFildPassword && (
-          <div className='
-          bg-gray-50 border border-gray-300
-          text-gray-900 text-sm rounded-r-lg
-          focus:ring-blue-500 focus:border-blue-500
-          block w-10 p-2.5 dark:bg-gray-700
-          dark:border-gray-600 dark:placeholder-gray-400
-          dark:text-white dark:focus:ring-blue-500
-          dark:focus:border-blue-500 h-12'
-          >
-            <button type='button'
-              className='text-lg h-full
-              w-full inline-flex justify-center
-              focus:outline-none flex items-center
-              transition-all duration-300
-              text-gray-600 dark:text-gray-400
-              hover:text-gray-900 dark:hover:text-white
-            '
-              onClick={showPassword}
-            >
+          <ContainerButton>
+            <ButtonShowPassword onClick={showPassword}>
               {hidePassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>)
+            </ButtonShowPassword>
+          </ContainerButton>)
         }
       </div>
       {Boolean(containsError && wasVisited) && (
