@@ -2,20 +2,29 @@
 
 import { createContext, ReactNode, useMemo, useState } from 'react';
 
+import { FormikProps, useFormik } from 'formik';
+
 import { destroyCookie, setCookie } from 'nookies';
 
 import { ApiService } from '@/services/api';
 
+import { ConstantsEnum } from '@/enums/constants.enum';
+import { InfoEnum } from '@/enums/info.enum';
 import { RoutesRequestsEnum } from '@/enums/routes';
 
-import { SignInInterface, SigninResponseInterface } from '@/interfaces/signin.interface';
+import { initialValuesSignin, SignInInterface, SigninResponseInterface } from '@/interfaces/signin.interface';
 import { UserInterface } from '@/interfaces/user.interface';
 
+import notify from '@/utils/notify';
+import notifyWithPromise from '@/utils/notifyPromise';
 import { TOKEN_PREFIX, COOKIE_CONFIG } from '@/utils/tokens';
+
+import schemaSignin from '@/schema/signin.schema';
 
 export interface UserContextProps {
   user: UserInterface | null;
   fetching: boolean;
+  formik: FormikProps<SignInInterface>;
   signIn: (credentials: SignInInterface) => Promise<void>;
 }
 
@@ -26,26 +35,46 @@ function UserProvider({ children }: { children: ReactNode }) {
   const [fetching, setFetching] = useState<boolean>(false);
 
   async function signIn(credentials: SignInInterface): Promise<void> {
-    try {
-      setFetching(true);
-      const api = new ApiService();
-      const { userInfo, accessToken } = await api.post<SigninResponseInterface, SignInInterface>
-      (RoutesRequestsEnum.LOGIN, credentials);
-
-      setUser(userInfo);
-      setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
-    } catch (error) {
-      destroyCookie(undefined, TOKEN_PREFIX);
-      console.log('Login deu errado');
-      console.log(error);
-    } finally {
-      setFetching(false);
-    }
+    setFetching(true);
+    notifyWithPromise({
+      promise : new Promise((resolve, reject) => {
+        const api = new ApiService();
+        api.post<SigninResponseInterface, SignInInterface>(RoutesRequestsEnum.LOGIN, credentials)
+          .then(({ userInfo, accessToken }) => {
+            setUser(userInfo);
+            setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
+            notify({
+              type : ConstantsEnum.SUCCESS,
+              message : InfoEnum.SIGNIN_SUCCESS,
+              toastId : ConstantsEnum.SIGNIN_SUCCESS,
+            });
+            resolve({ userInfo, accessToken });
+          })
+          .catch(error => {
+            reject();
+            const { response : { data : { message } } } = error;
+            notify({ type : ConstantsEnum.ERROR, message, toastId : ConstantsEnum.SIGNIN_ERROR });
+            destroyCookie(undefined, TOKEN_PREFIX);
+          }).finally(() => {
+            setFetching(false);
+          });
+      }),
+      pending : InfoEnum.REQUEST_SIGNIN,
+    });
   }
 
+  const formik = useFormik({
+    enableReinitialize : true,
+    validationSchema : schemaSignin,
+    initialValues : initialValuesSignin,
+    onSubmit : async (values) => {
+      await signIn(values);
+    }
+  });
+
   const shared = useMemo(() => ({
-    user, signIn, fetching
-  }), [user, signIn, fetching]);
+    user, signIn, fetching, formik
+  }), [user, signIn, fetching, formik]);
 
   return <UserContext.Provider value={shared}>
     {children}

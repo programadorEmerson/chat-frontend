@@ -1,4 +1,6 @@
 import '@/styles/globals.css';
+import { ToastContainer } from 'react-toastify';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -19,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {
           <UserProvider>
             <WebsocketProvider>
+              <ToastContainer />
               {children}
             </WebsocketProvider>
           </UserProvider>

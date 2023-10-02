@@ -9,14 +9,14 @@ import { twMerge } from 'tailwind-merge';
 
 import { ButtonShowPassword, ContainerButton, InputText } from './styles';
 
-interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
   formik: FormikProps<T>
   reference: keyof T & string
   type: 'text' | ConstantsEnum.PASSWORD
 }
 
 const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
-  const { type, formik : { errors, touched, values, handleChange }, reference } = props;
+  const { type, formik : { handleBlur, errors, touched, values, handleChange }, reference } = props;
   const isFildPassword = type === ConstantsEnum.PASSWORD;
   const value = String(values[reference]);
   const containsError = errors[reference];
@@ -31,10 +31,9 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
       <div className='w-full inline-flex h-15'>
         <InputText
           {...props}
-          id={reference}
-          name={reference}
           value={value}
           onChange={handleChange}
+          onBlur={handleBlur}
           isfildpassword={String(isFildPassword)}
           type={hidePassword ? 'password' : 'text'}
           className={twMerge(props.className)}

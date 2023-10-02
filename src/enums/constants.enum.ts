@@ -13,6 +13,14 @@ enum ConstantsEnum {
   PLACEHOLDER_EMAIL = 'Digite seu e-mail',
   PLACEHOLDER_PASSWORD = 'Digite sua senha',
   PLACEHOLDER_TEXT = 'Digite sua mensagem',
+
+  // Signin
+  SIGNIN_ERROR = 'signin-error',
+  SIGNIN_SUCCESS = 'signin-success',
+
+  // Others
+  SUCCESS = 'success',
+  ERROR = 'error',
 }
 
 export { ConstantsEnum };
