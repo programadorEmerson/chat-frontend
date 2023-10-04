@@ -52,7 +52,10 @@ const Login: NextPage = () => {
               reference={ConstantsEnum.PASSWORD}
               placeholder={ConstantsEnum.PLACEHOLDER_PASSWORD}
             />
-            <ButtonSubmit formik={formik}>
+            <ButtonSubmit
+              id="signin-button"
+              formik={formik}
+            >
               Enviar
             </ButtonSubmit>
           </form>

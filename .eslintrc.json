@@ -1,11 +1,13 @@
 {
   "env": {
     "browser": true,
+    "jest/globals": true,
     "es2021": true
   },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended",
     "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -15,10 +17,23 @@
   },
   "plugins": [
     "react",
+    "jest",
     "@typescript-eslint",
     "eslint-plugin-import-helpers",
+    "testing-library",
     "unused-imports"
   ],
+  "overrides": [
+    {
+        "files": [
+            "**/__tests__/**/*.[jt]s?(x)",
+            "**/?(*.)+(spec|test).[jt]s?(x)"
+        ],
+        "extends": [
+            "plugin:testing-library/react"
+        ]
+    }
+],
   "rules": {
     "@typescript-eslint/no-misused-promises": 0,
     "@typescript-eslint/no-floating-promises": 0,
@@ -114,5 +129,5 @@
       }
     ]
   },
-  "ignorePatterns": ["__*"]
+  "ignorePatterns": ["*.config.*"]
 }
