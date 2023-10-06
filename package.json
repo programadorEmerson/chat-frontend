@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:dev": "next dev",
+    "build:start": "next build && next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest --watch",
-    "test:ci": "jest --ci --coverage"
+    "test:ci": "jest --ci --coverage",
+    "commit": "git add . && git cz"
   },
   "dependencies": {
     "@bbbtech/storybook-formik": "^3.0.0",

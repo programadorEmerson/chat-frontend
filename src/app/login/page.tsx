@@ -17,36 +17,46 @@ const Login: NextPage = () => {
 
   return (
     <div className='flex w-full h-screen justify-center content-center'>
-      <section className="container flex flex-row ">
-        <div className='flex-col w-1/2 hidden md:flex justify-center content-center'>
-          <div className='flex flex-row h-1/4 md:h-2/4 justify-center items-center'>
-            <Image src={ImagesEnum.PEOPLE_LOGIN}
-              alt='login'
-              width={500}
-              height={500}
-            />
-          </div>
+      <section className="container flex justify-center content-center">
+        <div className='w-8/12 hidden justify-center content-center
+          xl:w-8/12 lg:w-7/12 md:w-6/12 xl:flex lg:flex md:flex
+        '
+        >
+          <Image src={ImagesEnum.PEOPLE_LOGIN}
+            className='object-contain w-full p-10 md:p-5'
+            alt='login'
+            width={500}
+            height={500}
+            priority
+          />
         </div>
 
-        <div className='flex flex-col w-full md:w-1/2 justify-center content-center p-10'>
-          <div className='flex flex-row h-1/4 md:h-3/6 justify-center items-center'>
-            <Image src={ImagesEnum.LOGO}
-              className='w-2/4 md:w-1/3'
+        <div className='w-full flex flex-col justify-center content-center
+          lg:w-5/12 md:w-6/12 sm:w-full gap-8
+        '
+        >
+          <div className='flex justify-center content-center'>
+            <Image
+              src={ImagesEnum.LOGO}
+              className='w-5/12 mb-6'
               alt='login'
               width={500}
               height={500}
             />
           </div>
-          <form onSubmit={formik.handleSubmit}
-            className='md:px-20 flex flex-col flex-1 justify-center items-centerpx-10 gap-3 '
+          <form
+            onSubmit={formik.handleSubmit}
+            className='px-5 flex flex-col justify-center items-center content-center gap-3'
           >
-            <Input.Text formik={formik}
+            <Input.Text
+              formik={formik}
               type={ConstantsEnum.TEXT}
               id={ConstantsEnum.EMAIL}
               reference={ConstantsEnum.EMAIL}
               placeholder={ConstantsEnum.PLACEHOLDER_EMAIL}
             />
-            <Input.Text formik={formik}
+            <Input.Text
+              formik={formik}
               type={ConstantsEnum.PASSWORD}
               id={ConstantsEnum.PASSWORD}
               reference={ConstantsEnum.PASSWORD}
@@ -59,6 +69,11 @@ const Login: NextPage = () => {
               Enviar
             </ButtonSubmit>
           </form>
+          <div className='flex flex-col justify-center items-center content-center'>
+            <span>
+              Xablau
+            </span>
+          </div>
         </div>
       </section>
     </div>

@@ -1,6 +1,8 @@
 'use client';
 
-import { createContext, ReactNode, useMemo, useState } from 'react';
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
+
+import { usePathname } from 'next/navigation';
 
 import { FormikProps, useFormik } from 'formik';
 
@@ -10,7 +12,7 @@ import { ApiService } from '@/services/api';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 import { InfoEnum } from '@/enums/info.enum';
-import { RoutesRequestsEnum } from '@/enums/routes';
+import { RoutesEnum, RoutesRequestsEnum } from '@/enums/routes';
 
 import { initialValuesSignin, SignInInterface, SigninResponseInterface } from '@/interfaces/signin.interface';
 import { UserInterface } from '@/interfaces/user.interface';
@@ -33,6 +35,16 @@ const UserContext = createContext({} as UserContextProps);
 function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserInterface | null>(null);
   const [fetching, setFetching] = useState<boolean>(false);
+
+  const path = usePathname();
+
+  useEffect(() => {
+    if (path === RoutesEnum.INITIAL && !user) {
+      destroyCookie(undefined, TOKEN_PREFIX);
+      setUser(null);
+      window.location.href = RoutesEnum.LOGIN;
+    }
+  }, [path]);
 
   async function signIn(credentials: SignInInterface): Promise<void> {
     setFetching(true);

@@ -5,8 +5,6 @@ import { FormikProps } from 'formik';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
-import { twMerge } from 'tailwind-merge';
-
 import { ButtonShowPassword, ContainerButton, InputText } from './styles';
 
 export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
@@ -36,7 +34,6 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
           onBlur={handleBlur}
           isfildpassword={String(isFildPassword)}
           type={hidePassword ? 'password' : 'text'}
-          className={twMerge(props.className)}
         />
         {isFildPassword && (
           <ContainerButton>
