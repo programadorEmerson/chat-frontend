@@ -3,9 +3,10 @@ import { toast } from 'react-toastify';
 type NotifyType = {
   promise: Promise<unknown>,
   pending: string,
+  notifyId?: string,
 };
 
-function notifyWithPromise({ promise, pending }: NotifyType) {
+function notifyWithPromise({ promise, pending, notifyId = 'default' }: NotifyType) {
   toast.promise(promise, { pending, success : undefined, error : undefined },{
     position : 'top-right',
     autoClose : 3000,
@@ -15,6 +16,7 @@ function notifyWithPromise({ promise, pending }: NotifyType) {
     draggable : true,
     progress : undefined,
     theme : 'light',
+    toastId : notifyId,
   });
 }
 

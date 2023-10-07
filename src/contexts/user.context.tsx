@@ -2,11 +2,13 @@
 
 import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 import { FormikProps, useFormik } from 'formik';
 
-import { destroyCookie, setCookie } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
+
+import jwtDecode from 'jwt-decode';
 
 import { ApiService } from '@/services/api';
 
@@ -15,6 +17,7 @@ import { InfoEnum } from '@/enums/info.enum';
 import { RoutesEnum, RoutesRequestsEnum } from '@/enums/routes';
 
 import { initialValuesSignin, SignInInterface, SigninResponseInterface } from '@/interfaces/signin.interface';
+import TokenInterface from '@/interfaces/token.interface';
 import { UserInterface } from '@/interfaces/user.interface';
 
 import notify from '@/utils/notify';
@@ -34,17 +37,24 @@ const UserContext = createContext({} as UserContextProps);
 
 function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<UserInterface | null>(null);
-  const [fetching, setFetching] = useState<boolean>(false);
+  const [fetching, setFetching] = useState<boolean>(true);
+  const { [TOKEN_PREFIX] : token } = parseCookies();
 
-  const path = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    if (path === RoutesEnum.INITIAL && !user) {
+  async function me(): Promise<void> {
+    try {
+      const api = new ApiService();
+      const { userInfo } = await api.get<SigninResponseInterface>(RoutesRequestsEnum.ME);
+      setUser(userInfo);
+      if(pathname === RoutesEnum.LOGIN) router.push(RoutesEnum.DASHBOARD);
+    } catch (error) {
       destroyCookie(undefined, TOKEN_PREFIX);
-      setUser(null);
-      window.location.href = RoutesEnum.LOGIN;
+    } finally {
+      setFetching(false);
     }
-  }, [path]);
+  }
 
   async function signIn(credentials: SignInInterface): Promise<void> {
     setFetching(true);
@@ -75,6 +85,22 @@ function UserProvider({ children }: { children: ReactNode }) {
     });
   }
 
+  function validateToken(): void {
+    setFetching(true);
+    if (token) {
+      const decoded = jwtDecode(token) as TokenInterface;
+      if (!decoded || decoded.exp < Date.now() / 1000) {
+        destroyCookie(undefined, TOKEN_PREFIX);
+        setUser(null);
+        setFetching(false);
+      } else {
+        me();
+      }
+    }
+  }
+
+  useEffect(() => validateToken(), [token]);
+
   const formik = useFormik({
     enableReinitialize : true,
     validationSchema : schemaSignin,
@@ -89,7 +115,16 @@ function UserProvider({ children }: { children: ReactNode }) {
   }), [user, signIn, fetching, formik]);
 
   return <UserContext.Provider value={shared}>
-    {children}
+    <div className={
+      `
+        flex h-screen w-screen justify-center content-center 
+        ${!fetching ? 'animate-fadeIn duration-1000' : 'opacity-0'}
+      `
+    }
+    >
+      {children}
+    </div>
+
   </UserContext.Provider>;
 }
 

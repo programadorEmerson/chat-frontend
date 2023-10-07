@@ -37,7 +37,10 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
         />
         {isFildPassword && (
           <ContainerButton>
-            <ButtonShowPassword onClick={showPassword}>
+            <ButtonShowPassword
+              onClick={showPassword}
+              type='button'
+            >
               {hidePassword ? <FaEyeSlash /> : <FaEye />}
             </ButtonShowPassword>
           </ContainerButton>)
