@@ -8,8 +8,6 @@ import { FormikProps, useFormik } from 'formik';
 
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 
-import jwtDecode from 'jwt-decode';
-
 import { ApiService } from '@/services/api';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
@@ -17,12 +15,12 @@ import { InfoEnum } from '@/enums/info.enum';
 import { RoutesEnum, RoutesRequestsEnum } from '@/enums/routes';
 
 import { initialValuesSignin, SignInInterface, SigninResponseInterface } from '@/interfaces/signin.interface';
-import TokenInterface from '@/interfaces/token.interface';
 import { UserInterface } from '@/interfaces/user.interface';
 
 import notify from '@/utils/notify';
 import notifyWithPromise from '@/utils/notifyPromise';
 import { TOKEN_PREFIX, COOKIE_CONFIG } from '@/utils/tokens';
+import validateToken from '@/utils/validateToken';
 
 import schemaSignin from '@/schema/signin.schema';
 
@@ -31,6 +29,7 @@ export interface UserContextProps {
   fetching: boolean;
   formik: FormikProps<SignInInterface>;
   signIn: (credentials: SignInInterface) => Promise<void>;
+  signOut: () => void;
 }
 
 const UserContext = createContext({} as UserContextProps);
@@ -56,6 +55,12 @@ function UserProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  function signOut(): void {
+    setUser(null);
+    destroyCookie(undefined, TOKEN_PREFIX);
+    router.push(RoutesEnum.LOGIN);
+  }
+
   async function signIn(credentials: SignInInterface): Promise<void> {
     setFetching(true);
     notifyWithPromise({
@@ -65,18 +70,13 @@ function UserProvider({ children }: { children: ReactNode }) {
           .then(({ userInfo, accessToken }) => {
             setUser(userInfo);
             setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
-            notify({
-              type : ConstantsEnum.SUCCESS,
-              message : InfoEnum.SIGNIN_SUCCESS,
-              toastId : ConstantsEnum.SIGNIN_SUCCESS,
-            });
-            resolve({ userInfo, accessToken });
+            resolve(true);
+            router.push(RoutesEnum.DASHBOARD);
           })
           .catch(error => {
             reject();
             const { response : { data : { message } } } = error;
             notify({ type : ConstantsEnum.ERROR, message, toastId : ConstantsEnum.SIGNIN_ERROR });
-            destroyCookie(undefined, TOKEN_PREFIX);
           }).finally(() => {
             setFetching(false);
           });
@@ -85,21 +85,22 @@ function UserProvider({ children }: { children: ReactNode }) {
     });
   }
 
-  function validateToken(): void {
-    setFetching(true);
-    if (token) {
-      const decoded = jwtDecode(token) as TokenInterface;
-      if (!decoded || decoded.exp < Date.now() / 1000) {
-        destroyCookie(undefined, TOKEN_PREFIX);
-        setUser(null);
-        setFetching(false);
-      } else {
-        me();
+  useEffect(() => {
+    function verifyToken() {
+      setFetching(true);
+      if (token) {
+        if (!validateToken(token)) {
+          destroyCookie(undefined, TOKEN_PREFIX);
+          setUser(null);
+          setFetching(false);
+        } else {
+          me();
+        }
       }
     }
-  }
 
-  useEffect(() => validateToken(), [token]);
+    verifyToken();
+  }, [token, pathname]);
 
   const formik = useFormik({
     enableReinitialize : true,
@@ -111,21 +112,14 @@ function UserProvider({ children }: { children: ReactNode }) {
   });
 
   const shared = useMemo(() => ({
-    user, signIn, fetching, formik
-  }), [user, signIn, fetching, formik]);
+    user, signIn, fetching, formik, signOut
+  }), [user, signIn, fetching, formik, signOut]);
 
-  return <UserContext.Provider value={shared}>
-    <div className={
-      `
-        flex h-screen w-screen justify-center content-center 
-        ${!fetching ? 'animate-fadeIn duration-1000' : 'opacity-0'}
-      `
-    }
-    >
+  return(
+    <UserContext.Provider value={shared}>
       {children}
-    </div>
-
-  </UserContext.Provider>;
+    </UserContext.Provider>
+  );
 }
 
 export { UserContext, UserProvider };
