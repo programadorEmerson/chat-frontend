@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, memo, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -37,14 +37,18 @@ const Menu: FC<MenuProps> = ({ children }) => {
 
   return (
     <StyledContainer visibility={fetching ? 'hide' : 'show'} >
-      <div className='flex w-full max-w-screen-xl p-2 rounded-md'>
+      <div className='relative flex w-full max-w-screen-xl p-2 rounded-md'>
         <div
-          className={`bg-gray-50 ${isMenuOpen ? 'w-3/12' : 'w-14'} drop-shadow-md duration-300 overflow-hidden`}
+          className={`absolute h-full bg-gray-50 ${!isMenuOpen ? 'w-14' : 'w-52'}
+          drop-shadow-md duration-300 overflow-hidden`}
         >
           <HeaderMenu
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
           />
+          <div className='px-1'>
+            <hr className='h-px my-1 bg-gray-300 border-0' />
+          </div>
           <GenerateManu
             isMenuOpen={isMenuOpen}
             selectedMenu={selectedMenu}
@@ -52,8 +56,14 @@ const Menu: FC<MenuProps> = ({ children }) => {
             handleClickMenu={handleClickMenu}
           />
         </div>
-        <main className='flex flex-col w-full'>
-          <header className='bg-gray-50 w-full px-4 py-6'>app bar</header>
+        <main className={`
+          flex flex-col w-full duration-500
+          ${!isMenuOpen ? 'ml-[58px]' : 'ml-[58px] sm:ml-[58px] md:ml-[58px] lg:ml-52 xl:ml-52'}
+        `}
+        >
+          <header className='bg-gray-50 w-full px-4 py-6'>
+            app bar
+          </header>
           <div className='bg-gray-100 flex flex-col h-full p-3'>
             {children}
           </div>
@@ -63,4 +73,4 @@ const Menu: FC<MenuProps> = ({ children }) => {
   );
 };
 
-export default memo(Menu);
+export default Menu;

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { FC } from 'react';
 import { HiMenu as InconMenu } from 'react-icons/hi';
 
@@ -8,14 +9,20 @@ type HeaderMenuProps = {
 
 const HeaderMenu: FC<HeaderMenuProps> = ({ isMenuOpen, setIsMenuOpen }) => {
   return (
-    <div className='flex w-full py-2'>
-      <div className={`${!isMenuOpen && '-ml-8'} flex w-8/12 justify-center
-      content-center ${!isMenuOpen && 'opacity-0'} duration-200`}
-      >
-        <span className='flex pt-2 justify-center content-center text-center'>Menu</span>
+    <div className='flex w-full pb-2 pt-3'>
+      <div className={`${!isMenuOpen && '-ml-8'} ${!isMenuOpen && 'opacity-0'} duration-200 w-9/12 flex items-center justify-center content-center`}>
+        <span
+          className={`left-24 group-hover:text-slate-800 ${!isMenuOpen && 'opacity-0 text-[0]'} duration-500 font-medium text-bluelogo
+          text-md
+          `}
+        >
+          {
+            process.env.NEXT_PUBLIC_APP_NAME
+          }
+        </span>
       </div>
-      <div className={`flex ${isMenuOpen ? 'w-4/12' : 'w-full'} justify-center content-center
-      duration-500 ${!isMenuOpen && 'mr-0.5'}`}
+      <div className={`flex ${isMenuOpen ? 'w-3/12' : 'w-full'} justify-center content-center
+        duration-500 ${!isMenuOpen && 'mr-1.5'}`}
       >
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}

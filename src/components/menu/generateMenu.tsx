@@ -17,7 +17,7 @@ const GenerateManu: FC<GenerateManuProps> = ({ isMenuOpen, selectedMenu, returnL
   const { LOGIN } = MenuEnum;
 
   return (
-    <div className='w-65 absolute'>
+    <div className='w-72 absolute'>
       {
         Object.values(MenuEnum)
           .filter((menu) => menu !== LOGIN)

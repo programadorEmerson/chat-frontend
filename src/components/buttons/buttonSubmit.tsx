@@ -32,7 +32,7 @@ const ButtonSubmit: <T>(props: ButtonSubmitProps<T>) => JSX.Element = (props) =>
         type={(allTouch && disabled) ? 'button' : 'submit'}
         onClick={notifyError}
         className={twMerge(`transition-all duration-300
-        w-full inline-flex justify-center bg-blue-500 
+        w-full inline-flex justify-center bg-bluelogo
         hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
         ${(allTouch && disabled) ? 'opacity-50 cursor-not-allowed' : ''}
       `, props.className)}

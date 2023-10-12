@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
+import { createContext, FC, memo, ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -11,6 +11,7 @@ import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { ApiService } from '@/services/api';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
+import { ActionEnum, Rule, SubjectEnum } from '@/enums/featureCode.enum';
 import { InfoEnum } from '@/enums/info.enum';
 import { RoutesEnum, RoutesRequestsEnum } from '@/enums/routes';
 
@@ -24,6 +25,25 @@ import validateToken from '@/utils/validateToken';
 
 import schemaSignin from '@/schema/signin.schema';
 
+const rulesFullClients:Rule[] = [
+  {
+    action : ActionEnum.READ,
+    subject : SubjectEnum.CLIENTS
+  },
+  {
+    action : ActionEnum.CREATE,
+    subject : SubjectEnum.CLIENTS
+  },
+  {
+    action : ActionEnum.UPDATE,
+    subject : SubjectEnum.CLIENTS
+  },
+  {
+    action : ActionEnum.DELETE,
+    subject : SubjectEnum.CLIENTS
+  }
+];
+
 export interface UserContextProps {
   user: UserInterface | null;
   fetching: boolean;
@@ -34,10 +54,17 @@ export interface UserContextProps {
 
 const UserContext = createContext({} as UserContextProps);
 
-function UserProvider({ children }: { children: ReactNode }) {
+const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   const [user, setUser] = useState<UserInterface | null>(null);
   const [fetching, setFetching] = useState<boolean>(true);
   const { [TOKEN_PREFIX] : token } = parseCookies();
+
+  function mockRulesUser(user: UserInterface): UserInterface {
+    return {
+      ...user,
+      rules : rulesFullClients
+    };
+  }
 
   const router = useRouter();
   const pathname = usePathname();
@@ -46,7 +73,7 @@ function UserProvider({ children }: { children: ReactNode }) {
     try {
       const api = new ApiService();
       const { userInfo } = await api.get<SigninResponseInterface>(RoutesRequestsEnum.ME);
-      setUser(userInfo);
+      setUser(mockRulesUser(userInfo));
       if(pathname === RoutesEnum.LOGIN) router.push(RoutesEnum.DASHBOARD);
     } catch (error) {
       destroyCookie(undefined, TOKEN_PREFIX);
@@ -68,7 +95,7 @@ function UserProvider({ children }: { children: ReactNode }) {
         const api = new ApiService();
         api.post<SigninResponseInterface, SignInInterface>(RoutesRequestsEnum.LOGIN, credentials)
           .then(({ userInfo, accessToken }) => {
-            setUser(userInfo);
+            setUser(mockRulesUser(userInfo));
             setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
             resolve(true);
             router.push(RoutesEnum.DASHBOARD);
@@ -120,6 +147,8 @@ function UserProvider({ children }: { children: ReactNode }) {
       {children}
     </UserContext.Provider>
   );
-}
+});
+
+UserProvider.displayName = 'UserProvider';
 
 export { UserContext, UserProvider };

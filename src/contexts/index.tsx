@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
 
+import { AbilityProvider } from './ability.context';
 import { UserProvider } from './user.context';
 import { WebsocketProvider } from './websocket';
 
@@ -13,7 +14,9 @@ const ContextsProvider: FC<Props> = ({ children }) => {
     <UserProvider>
       <WebsocketProvider>
         <ToastContainer />
-        {children}
+        <AbilityProvider>
+          {children}
+        </AbilityProvider>
       </WebsocketProvider>
     </UserProvider>
   );
