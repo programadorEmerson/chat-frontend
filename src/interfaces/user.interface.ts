@@ -1,4 +1,4 @@
-import { Rule } from '@/enums/featureCode.enum';
+import { Rule } from '@/constants/subject.constants';
 
 import { SignInInterface } from './signin.interface';
 

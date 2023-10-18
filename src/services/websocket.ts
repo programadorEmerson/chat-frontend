@@ -44,9 +44,9 @@ class Websocket {
     this.authenticatedListeners(user);
   };
 
-  private authenticatedListeners = (user: UserInterface) => {
-    console.log('user: ', user);
-    this.onUsersOnline();
+  private authenticatedListeners = (_user: UserInterface) => {
+    // console.log('user: ', user);
+    // this.onUsersOnline();
   };
 
   private notAuthenticatedEmitter = () => {

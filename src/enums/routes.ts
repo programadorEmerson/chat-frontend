@@ -1,5 +1,5 @@
 import { BsFillPeopleFill } from 'react-icons/bs';
-import { FaPeopleCarry, FaCashRegister } from 'react-icons/fa';
+import { FaPeopleCarry, FaCashRegister, FaMoneyBill } from 'react-icons/fa';
 import { GiBoxUnpacking } from 'react-icons/gi';
 import { HiHome, HiLogin } from 'react-icons/hi';
 
@@ -23,6 +23,7 @@ export enum MenuEnum {
   PRODUCTS = 'products',
   CASH_FLOW = 'cash-flow',
   LOGIN = 'login',
+  FINANCIAL = 'financial',
 }
 
 export const MenuTranslationEnum: MenuTranslationType = {
@@ -32,6 +33,7 @@ export const MenuTranslationEnum: MenuTranslationType = {
   [MenuEnum.PRODUCTS] : 'Produtos',
   [MenuEnum.PROVIDERS] : 'Fornecedores',
   [MenuEnum.CASH_FLOW] : 'Fluxo de Caixa',
+  [MenuEnum.FINANCIAL] : 'Financeiro',
 };
 
 export const MenuIcons: MenuIconsType = {
@@ -41,6 +43,7 @@ export const MenuIcons: MenuIconsType = {
   [MenuEnum.PRODUCTS] : GiBoxUnpacking,
   [MenuEnum.PROVIDERS] : FaPeopleCarry,
   [MenuEnum.CASH_FLOW] : FaCashRegister,
+  [MenuEnum.FINANCIAL] : FaMoneyBill,
 };
 
 export enum RoutesEnum {

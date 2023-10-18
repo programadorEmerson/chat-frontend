@@ -2,9 +2,15 @@ import React from 'react';
 
 import { NextPage } from 'next';
 
+import GuardRoute from '@/components/guardRoute';
+
+import { SubjectConstants } from '@/constants/subject.constants';
+
 const CashFlow: NextPage = () => {
   return (
-    <div>CashFlow</div>
+    <GuardRoute subject={SubjectConstants.CASH_FLOW}>
+      <div>CashFlow</div>
+    </GuardRoute>
   );
 };
 

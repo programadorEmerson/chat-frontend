@@ -1,20 +1,20 @@
-import { ActionEnum, Rule, SubjectEnum } from '@/enums/featureCode.enum';
+import { ActionConstants, Rule, SubjectConstants } from '@/constants/subject.constants';
 
 export const rulesFullClients:Rule[] = [
   {
-    action : ActionEnum.READ,
-    subject : SubjectEnum.CLIENTS
+    action : ActionConstants.READ,
+    subject : SubjectConstants.CLIENTS
   },
   {
-    action : ActionEnum.CREATE,
-    subject : SubjectEnum.CLIENTS
+    action : ActionConstants.CREATE,
+    subject : SubjectConstants.CLIENTS
   },
   {
-    action : ActionEnum.UPDATE,
-    subject : SubjectEnum.CLIENTS
+    action : ActionConstants.UPDATE,
+    subject : SubjectConstants.CLIENTS
   },
   {
-    action : ActionEnum.DELETE,
-    subject : SubjectEnum.CLIENTS
+    action : ActionConstants.DELETE,
+    subject : SubjectConstants.CLIENTS
   }
 ];

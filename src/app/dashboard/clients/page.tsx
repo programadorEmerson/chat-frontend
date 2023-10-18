@@ -6,11 +6,11 @@ import { NextPage } from 'next';
 
 import GuardRoute from '@/components/guardRoute';
 
-import { SubjectEnum } from '@/enums/featureCode.enum';
+import { SubjectConstants } from '@/constants/subject.constants';
 
 const Clients: NextPage = () => {
   return (
-    <GuardRoute subject={SubjectEnum.CLIENTS}>
+    <GuardRoute subject={SubjectConstants.CLIENTS}>
       <div>
         Clients
       </div>

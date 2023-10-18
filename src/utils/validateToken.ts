@@ -8,7 +8,6 @@ const validateToken = (token: string) => {
     const payload = JSON.parse(Buffer.from(base64, 'base64').toString());
 
     if (!payload.exp || typeof payload.exp !== 'number') return false;
-
     const now = Math.round(new Date().getTime() / 1000);
     return now < payload.exp;
   } catch (error) {

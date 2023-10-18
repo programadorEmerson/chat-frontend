@@ -1,17 +1,11 @@
-
 import { useEffect, useState } from 'react';
 
-import { ActionEnum, SubjectEnum } from '@/enums/featureCode.enum';
+import { Rule } from '@/interfaces/rule.interface';
 
 import { useAbilities } from './useAbilities';
 import { useUserContext } from './useUser';
 
-export type UseCheckAbilities = {
-  subject: SubjectEnum;
-  action: ActionEnum;
-};
-
-const useCheckAbilities = ({ action, subject }: UseCheckAbilities): {authorized: boolean | null} => {
+const useCheckAbilities = ({ action, subject }: Rule): {authorized: boolean | null} => {
   const [authorized, setAuthorized] = useState<boolean | null>(null);
 
   const { abilities : ability } = useAbilities();
@@ -20,12 +14,8 @@ const useCheckAbilities = ({ action, subject }: UseCheckAbilities): {authorized:
   const check = () => () => ability.can(action, subject);
 
   useEffect(() => {
-    if (user) {
-      setTimeout(() => {
-        setAuthorized(check());
-      }, 10000);
-    }
-  }, [user]);
+    if (user) setAuthorized(check());
+  }, [user, subject, action]);
 
   return { authorized };
 };

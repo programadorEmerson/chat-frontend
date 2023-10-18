@@ -11,7 +11,6 @@ import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { ApiService } from '@/services/api';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
-import { ActionEnum, Rule, SubjectEnum } from '@/enums/featureCode.enum';
 import { InfoEnum } from '@/enums/info.enum';
 import { RoutesEnum, RoutesRequestsEnum } from '@/enums/routes';
 
@@ -24,25 +23,6 @@ import { TOKEN_PREFIX, COOKIE_CONFIG } from '@/utils/tokens';
 import validateToken from '@/utils/validateToken';
 
 import schemaSignin from '@/schema/signin.schema';
-
-const rulesFullClients:Rule[] = [
-  {
-    action : ActionEnum.READ,
-    subject : SubjectEnum.CLIENTS
-  },
-  {
-    action : ActionEnum.CREATE,
-    subject : SubjectEnum.CLIENTS
-  },
-  {
-    action : ActionEnum.UPDATE,
-    subject : SubjectEnum.CLIENTS
-  },
-  {
-    action : ActionEnum.DELETE,
-    subject : SubjectEnum.CLIENTS
-  }
-];
 
 export interface UserContextProps {
   user: UserInterface | null;
@@ -59,21 +39,15 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   const [fetching, setFetching] = useState<boolean>(true);
   const { [TOKEN_PREFIX] : token } = parseCookies();
 
-  function mockRulesUser(user: UserInterface): UserInterface {
-    return {
-      ...user,
-      rules : rulesFullClients
-    };
-  }
-
   const router = useRouter();
   const pathname = usePathname();
 
   async function me(): Promise<void> {
     try {
       const api = new ApiService();
+      if (user) return setUser({ ...user });
       const { userInfo } = await api.get<SigninResponseInterface>(RoutesRequestsEnum.ME);
-      setUser(mockRulesUser(userInfo));
+      setUser(userInfo);
       if(pathname === RoutesEnum.LOGIN) router.push(RoutesEnum.DASHBOARD);
     } catch (error) {
       destroyCookie(undefined, TOKEN_PREFIX);
@@ -95,7 +69,8 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
         const api = new ApiService();
         api.post<SigninResponseInterface, SignInInterface>(RoutesRequestsEnum.LOGIN, credentials)
           .then(({ userInfo, accessToken }) => {
-            setUser(mockRulesUser(userInfo));
+            setUser(userInfo);
+            console.log(userInfo);
             setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
             resolve(true);
             router.push(RoutesEnum.DASHBOARD);

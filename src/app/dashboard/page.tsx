@@ -1,23 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { NextPage } from 'next';
 
-import { useUserContext } from '@/hooks/useUser';
+import GuardRoute from '@/components/guardRoute';
+
+import { SubjectConstants } from '@/constants/subject.constants';
 
 const Dashboard: NextPage = () => {
-  const { user } = useUserContext();
-
-  useEffect(() => {
-    console.log('User Dashboard: ', user);
-  }, [user]);
 
   return (
     <div className='justify-center content-center'>
-      <span>
-        Dashboard
-      </span>
+      <GuardRoute subject={SubjectConstants.DASHBOARD}>
+        <div>Dashboard</div>
+      </GuardRoute>
     </div>
   );
 };

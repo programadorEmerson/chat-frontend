@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -18,12 +18,14 @@ type MenuProps = {
 
 const Menu: FC<MenuProps> = ({ children }) => {
   const { DASHBOARD } = MenuEnum;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(DASHBOARD);
   const { push } = useRouter();
   const pathName = usePathname();
-
   const { fetching } = useUserContext();
+
+  const currentPath = pathName.split('/');
 
   function returnLink (menu: MenuEnum) {
     if (menu === DASHBOARD) return `/${menu}`;
@@ -31,9 +33,17 @@ const Menu: FC<MenuProps> = ({ children }) => {
   }
 
   function handleClickMenu(menu: MenuEnum) {
-    setSelectedMenu(menu);
     push(returnLink(menu));
   }
+
+  useEffect(() => {
+    if (currentPath.length > 2) {
+      setSelectedMenu(currentPath[2] as MenuEnum);
+    } else {
+      setSelectedMenu(DASHBOARD);
+    }
+
+  }, [pathName]);
 
   return (
     <StyledContainer visibility={fetching ? 'hide' : 'show'} >
