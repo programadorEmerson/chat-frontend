@@ -9,7 +9,7 @@ import { MenuEnum } from '@/enums/routes';
 
 import { useUserContext } from '@/hooks/useUser';
 
-import GenerateManu from './generateMenu';
+import GenerateMenu from './generateMenu';
 import HeaderMenu from './headerMenu';
 
 type MenuProps = {
@@ -46,11 +46,14 @@ const Menu: FC<MenuProps> = ({ children }) => {
   }, [pathName]);
 
   return (
-    <StyledContainer visibility={fetching ? 'hide' : 'show'} >
-      <div className='relative flex w-full max-w-screen-xl p-2 rounded-md'>
+    <StyledContainer
+      visibility={fetching ? 'hide' : 'show'}
+      className={'bg-[url("/assets/bg.jpeg")] bg-cover bg-center'}
+    >
+      <div className='relative flex w-full max-w-screen-xl p-0 rounded-md drop-shadow-md'>
         <div
           className={`absolute h-full bg-gray-50 ${!isMenuOpen ? 'w-14' : 'w-52'}
-          drop-shadow-md duration-300 overflow-hidden`}
+          ${isMenuOpen && 'drop-shadow-md'} duration-300 overflow-hidden`}
         >
           <HeaderMenu
             isMenuOpen={isMenuOpen}
@@ -59,7 +62,7 @@ const Menu: FC<MenuProps> = ({ children }) => {
           <div className='px-1'>
             <hr className='h-px my-1 bg-gray-300 border-0' />
           </div>
-          <GenerateManu
+          <GenerateMenu
             isMenuOpen={isMenuOpen}
             selectedMenu={selectedMenu}
             returnLink={returnLink}
@@ -67,8 +70,8 @@ const Menu: FC<MenuProps> = ({ children }) => {
           />
         </div>
         <main className={`
-          flex flex-col w-full duration-500
-          ${!isMenuOpen ? 'ml-[58px]' : 'ml-[58px] sm:ml-[58px] md:ml-[58px] lg:ml-52 xl:ml-52'}
+          flex flex-col w-full duration-300
+          ${!isMenuOpen ? 'ml-[57px]' : 'ml-[57px] sm:ml-[57px] md:ml-[57px] lg:ml-52 xl:ml-52'}
         `}
         >
           <header className='bg-gray-50 w-full px-4 py-6'>

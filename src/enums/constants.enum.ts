@@ -21,6 +21,10 @@ enum ConstantsEnum {
   // Others
   SUCCESS = 'success',
   ERROR = 'error',
+  READ = 'read',
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
 }
 
 export { ConstantsEnum };

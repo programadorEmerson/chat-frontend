@@ -19,7 +19,7 @@ const Login: NextPage = () => {
     <div className='flex w-full h-screen justify-center content-center'>
       <section className="container flex justify-center content-center">
         <div className='w-8/12 hidden justify-center content-center
-          xl:w-8/12 lg:w-7/12 md:w-6/12 xl:flex lg:flex md:flex
+          xl:w-7/12 lg:w-7/12 md:w-6/12 xl:flex lg:flex md:flex
         '
         >
           <Image src={ImagesEnum.PEOPLE_LOGIN}
@@ -38,7 +38,7 @@ const Login: NextPage = () => {
           <div className='flex justify-center content-center'>
             <Image
               src={ImagesEnum.LOGO}
-              className='w-5/12 mb-6'
+              className='w-6/12 mb-6'
               alt='login'
               width={500}
               height={500}

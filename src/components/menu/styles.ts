@@ -1,7 +1,13 @@
+
 import sw from 'tailwind-styled-components';
 
-export const StyledContainer = sw.div<{visibility: 'show' | 'hide'}>`
+type StyledContainerProps = {
+    visibility: 'show' | 'hide'
+}
+
+export const StyledContainer = sw.div<StyledContainerProps>`
     flex
+    bg-gray-500
     h-screen
     w-screen
     justify-center
