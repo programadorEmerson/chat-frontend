@@ -18,9 +18,6 @@ export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement>
  *
  * @template T - Type of the form values.
  * @extends {InputHTMLAttributes<HTMLInputElement>}
- * @property {FormikProps<T>} formik - Formik props for form management.
- * @property {keyof T & string} reference - Name of the form field.
- * @property {'text' | ConstantsEnum.PASSWORD} type - Type of the input.
  */
 
 /**

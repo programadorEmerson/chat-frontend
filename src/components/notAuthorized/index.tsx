@@ -4,6 +4,17 @@ import { ImagesEnum } from '@/enums/images.enum';
 
 import { Authorize } from './styles';
 
+/**
+ * NotAuthorized Component.
+ *
+ * This component is displayed when a user does not have the necessary permissions to access a specific page or resource.
+ * It features an image indicating restricted access, and instructions on how to proceed in case of a potential error.
+ *
+ * @example
+ * ```jsx
+ * <NotAuthorized />
+ * ```
+ */
 const NotAuthorized: FC = () => {
   return (
     <Authorize.Container>

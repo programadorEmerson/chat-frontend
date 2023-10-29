@@ -16,6 +16,21 @@ type MenuProps = {
     children: React.ReactNode;
 };
 
+/**
+ * MenuApp Component.
+ *
+ * This component provides the application's primary navigation structure.
+ * It displays the main menu, header, and an app bar. The currently selected menu is determined by the page's route.
+ *
+ * @component
+ *
+ * @example
+ * ```jsx
+ * <MenuApp>
+ *   <YourChildComponent />
+ * </MenuApp>
+ * ```
+ */
 const MenuApp: FC<MenuProps> = ({ children }) => {
   const { DASHBOARD } = MenuEnum;
 

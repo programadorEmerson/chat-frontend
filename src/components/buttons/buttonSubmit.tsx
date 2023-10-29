@@ -16,8 +16,6 @@ interface ButtonSubmitProps<T> extends React.ButtonHTMLAttributes<HTMLButtonElem
  * This button is aware of the Formik form state and adjusts its behavior
  * based on the validity of the form and whether all fields have been touched.
  *
- * @param formik - The Formik form props.
- * @param rest - Any additional button props.
  * @returns - A JSX button element.
  */
 const ButtonSubmit = <T extends object>({ formik,...rest }: ButtonSubmitProps<T>): JSX.Element => {

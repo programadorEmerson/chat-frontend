@@ -10,6 +10,16 @@ export type ItemProps = {
     menu: MenuEnum;
 };
 
+/**
+ * ItemMenu Component.
+ *
+ * This component displays an individual menu item. The item's appearance changes based on whether
+ * it's the currently selected menu or not. The menu item consists of an icon, a name, a checkmark,
+ * and an arrow.
+ *
+ * @example
+ * <ItemMenu selectedMenu={MenuEnum.DASHBOARD} menu={MenuEnum.SETTINGS} />
+ */
 const ItemMenu: FC<ItemProps> = ({ selectedMenu, menu }) => {
   const Icon = MenuIcons[menu];
 
