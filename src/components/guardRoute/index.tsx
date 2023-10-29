@@ -1,10 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
-
-import Image from 'next/image';
-
-import { ImagesEnum } from '@/enums/images.enum';
+import { FC, ReactNode, memo, useEffect, useState } from 'react';
 
 import useCheckAbilities from '@/hooks/useCheckAbilities';
 
@@ -13,57 +9,70 @@ import { Rule } from '@/interfaces/rule.interface';
 import { ActionConstants } from '@/constants/action.constants';
 
 import NotAuthorized from '../notAuthorized';
+import Loading from './Loading';
+import { Styled } from './styles';
 
 interface GuardRouteProps extends Omit<Rule, 'action'> {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
+// Constant for the delay before showing the NotAuthorized component
+const NOT_AUTHORIZED_DELAY = 500;
+
+/**
+ * GuardRoute - A Higher Order Component (HOC) responsible for guarding routes.
+ *
+ * @component
+ * @example
+ *   return (
+ *     <GuardRoute subject="someSubject">
+ *       <YourComponent />
+ *     </GuardRoute>
+ *   )
+ */
 const GuardRoute: FC<GuardRouteProps> = ({ subject, children }) => {
   const [viewNotAuthorized, setViewNotAuthorized] = useState(false);
-
   const { authorized } = useCheckAbilities({ action : ActionConstants.READ, subject });
 
-  const notAuthorized = typeof authorized === 'boolean' && authorized === false;
+  // Simplified not authorized check
+  const notAuthorized = authorized === false;
 
   useEffect(() => {
-    if (!viewNotAuthorized && !authorized) {
-      setTimeout(() => setViewNotAuthorized(true), 500);
-      return;
-    }
-    setViewNotAuthorized(false);
+    let isMounted = true;
 
+    if (!viewNotAuthorized && notAuthorized) {
+      const timer = setTimeout(() => {
+        if (isMounted) {
+          setViewNotAuthorized(true);
+        }
+      }, NOT_AUTHORIZED_DELAY);
+
+      return () => {
+        isMounted = false;
+        clearTimeout(timer);
+      };
+    }
+
+    setViewNotAuthorized(false);
   }, [notAuthorized]);
 
   if (authorized === null) {
-    return (
-      <div role="status"
-        className='w-full h-full flex items-center justify-center'
-      >
-        <Image
-          src={ImagesEnum.LOADING}
-          className='object-contain w-52 p-10 md:p-5'
-          alt='login'
-          width={500}
-          height={500}
-          priority
-        />
-      </div>
-    );
+    return <Styled.ContainerLoading>
+      <Loading />
+    </Styled.ContainerLoading>;
   }
 
   if (authorized) {
-    return (
-      <div className='flex h-full w-full justify-center content-center'>
-        {children}
-      </div>
-    );
+    return <Styled.AuthorizedContainer>
+      {children}
+    </Styled.AuthorizedContainer>;
   }
 
   return (
-    <div className='flex h-full w-full justify-center content-center'>
-      {viewNotAuthorized && (<NotAuthorized />)}
-    </div>
+    <Styled.UnauthorizedContainer>
+      {viewNotAuthorized && <NotAuthorized />}
+    </Styled.UnauthorizedContainer>
   );
 };
 
-export default GuardRoute;
+export default memo(GuardRoute);

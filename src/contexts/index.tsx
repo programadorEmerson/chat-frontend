@@ -5,6 +5,8 @@ import { AbilityProvider } from './ability.context';
 import { UserProvider } from './user.context';
 import { WebsocketProvider } from './websocket';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 type Props = {
   children: React.ReactNode
 }

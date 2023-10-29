@@ -1,6 +1,23 @@
 import sw from 'tailwind-styled-components';
 
-export const ContainerButton = sw.div`
+const Container = sw.section`
+    w-full
+    inline-flex
+    flex-col
+`;
+
+const ContentInput = sw.section`
+    w-full
+    inline-flex
+    h-15
+`;
+
+const TextError = sw.small`
+    text-red-500
+    ml-2
+`;
+
+const ContainerButton = sw.div`
     border
     text-gray-900
     text-sm 
@@ -15,7 +32,7 @@ export const ContainerButton = sw.div`
     focus:border-bluelogo h-12
 `;
 
-export const ButtonShowPassword = sw.button`
+const ButtonShowPassword = sw.button`
     text-lg h-full 
     w-full justify-center
     focus:outline-none flex items-center
@@ -24,7 +41,7 @@ export const ButtonShowPassword = sw.button`
     hover:text-gray-900 dark:hover:text-gray-800
 `;
 
-export const InputText = sw.input<{isfildpassword: string}>`
+const InputText = sw.input<{isfildpassword: string}>`
     border
     h-12
     bg-gray-100
@@ -42,3 +59,12 @@ export const InputText = sw.input<{isfildpassword: string}>`
     focus:ring-bluelogo
     focus:border-bluelogo
 `;
+
+export const Inputs = {
+  ContainerButton,
+  ButtonShowPassword,
+  ContentInput,
+  Container,
+  InputText,
+  TextError,
+};

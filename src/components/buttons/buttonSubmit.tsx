@@ -1,43 +1,46 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 
 import { FormikProps } from 'formik';
 
 import notify from '@/utils/notify';
 
-import { twMerge } from 'tailwind-merge';
+import { Button } from './styles';
 
-import 'react-toastify/dist/ReactToastify.css';
-interface ButtonSubmitProps<T> extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonSubmitProps<T> extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     formik: FormikProps<T>
 }
 
-const ButtonSubmit: <T>(props: ButtonSubmitProps<T>) => JSX.Element = (props) => {
-  const { formik : { errors, values, touched } } = props;
-  const disabled = Object.keys(errors).length > 0;
-  const keysValidate = Object.keys(values as object);
-  const keysTouched = Object.keys(touched as object);
-  const allTouch = keysValidate.every((key) => keysTouched.includes(key));
+/**
+ * ButtonSubmit - A button component tailored for form submissions.
+ *
+ * This button is aware of the Formik form state and adjusts its behavior
+ * based on the validity of the form and whether all fields have been touched.
+ *
+ * @param formik - The Formik form props.
+ * @param rest - Any additional button props.
+ * @returns - A JSX button element.
+ */
+const ButtonSubmit = <T extends object>({ formik,...rest }: ButtonSubmitProps<T>): JSX.Element => {
+  const { errors, values, touched } = formik;
+  const disabled = Boolean(Object.keys(errors).length);
 
   const notifyError = () => {
-    if (disabled) {
-      Object.values(errors).forEach((error) =>
-        notify({ type : 'error', message : error as string, toastId : 'error' }));
-    }
+    if (!disabled) return;
+    Object.values(errors).forEach((error) =>
+      notify({ type : 'error', message : String(error), toastId : 'error' }));
   };
 
+  const allTouch = Object.keys(values).every((key) => key in touched);
+  const statusButton = (allTouch && disabled) ? 'disabled' : 'enabled';
+  const type = (allTouch && disabled) ? 'button' : 'submit';
+
   return (
-    <>
-      <button
-        {...props}
-        type={(allTouch && disabled) ? 'button' : 'submit'}
-        onClick={notifyError}
-        className={twMerge(`transition-all duration-300
-        w-full inline-flex justify-center bg-bluelogo
-        hover:bg-blue-700 text-white font-bold py-2 px-4 rounded 
-        ${(allTouch && disabled) ? 'opacity-50 cursor-not-allowed' : ''}
-      `, props.className)}
-      />
-    </>
+    <Button.Submit
+      {...rest}
+      statusButton={statusButton}
+      type={type}
+      onClick={notifyError}
+    />
   );
 };
 

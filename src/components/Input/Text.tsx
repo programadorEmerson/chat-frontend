@@ -5,7 +5,7 @@ import { FormikProps } from 'formik';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
-import { ButtonShowPassword, ContainerButton, InputText } from './styles';
+import { Inputs } from './styles';
 
 export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
   formik: FormikProps<T>
@@ -13,7 +13,32 @@ export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement>
   type: 'text' | ConstantsEnum.PASSWORD
 }
 
-const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
+/**
+ * Props for the Text component.
+ *
+ * @template T - Type of the form values.
+ * @extends {InputHTMLAttributes<HTMLInputElement>}
+ * @property {FormikProps<T>} formik - Formik props for form management.
+ * @property {keyof T & string} reference - Name of the form field.
+ * @property {'text' | ConstantsEnum.PASSWORD} type - Type of the input.
+ */
+
+/**
+ * Text - A text input component that can also function as a password input.
+ *
+ * This component integrates with Formik for form management. It also provides a show/hide feature for password fields.
+ *
+ * @component
+ * @example
+ *   <Formik {...formikProps}>
+ *     {(formik) => (
+ *       <Text formik={formik} reference="passwordField" type={ConstantsEnum.PASSWORD} />
+ *     )}
+ *   </Formik>
+ *
+ * @returns {JSX.Element} Text component.
+ */
+const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Element => {
   const { type, formik : { handleBlur, errors, touched, values, handleChange }, reference } = props;
   const isFildPassword = type === ConstantsEnum.PASSWORD;
   const value = String(values[reference]);
@@ -22,12 +47,12 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
 
   const [hidePassword, setHidePassword] = useState(isFildPassword);
 
-  const showPassword: () => void = () => setHidePassword(!hidePassword);
+  const showPassword: () => void = () => setHidePassword(prev => !prev);
 
   return (
-    <div className='w-full inline-flex flex-col'>
-      <div className='w-full inline-flex h-15'>
-        <InputText
+    <Inputs.Container>
+      <Inputs.ContentInput>
+        <Inputs.InputText
           {...props}
           value={value}
           onChange={handleChange}
@@ -36,24 +61,24 @@ const Text: <T>(props: InputTextProps<T>) => JSX.Element = (props) => {
           type={hidePassword ? 'password' : 'text'}
         />
         {isFildPassword && (
-          <ContainerButton>
-            <ButtonShowPassword
+          <Inputs.ContainerButton>
+            <Inputs.ButtonShowPassword
               onClick={showPassword}
               type='button'
             >
               {hidePassword ? <FaEyeSlash /> : <FaEye />}
-            </ButtonShowPassword>
-          </ContainerButton>)
+            </Inputs.ButtonShowPassword>
+          </Inputs.ContainerButton>)
         }
-      </div>
+      </Inputs.ContentInput>
       {Boolean(containsError && wasVisited) && (
         <span className=''>
-          <small className='text-red-500 ml-2'>
+          <Inputs.TextError>
             {String(containsError)}
-          </small>
+          </Inputs.TextError>
         </span>
       )}
-    </div>
+    </Inputs.Container>
   );
 };
 

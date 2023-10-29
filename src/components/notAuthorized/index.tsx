@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 
-import Image from 'next/image';
-
 import { ImagesEnum } from '@/enums/images.enum';
+
+import { Authorize } from './styles';
 
 const NotAuthorized: FC = () => {
   return (
-    <div className={'flex flex-col w-full justify-center items-center gap-3'}>
-      <Image src={ImagesEnum.PEOPLE_NOT_AUTHORIZED}
-        className='object-contain w-2/5 p-10 md:p-5'
+    <Authorize.Container>
+      <Authorize.ImageNotAuthorized
+        src={ImagesEnum.PEOPLE_NOT_AUTHORIZED}
         alt='login'
         width={1000}
         height={1000}
@@ -23,7 +23,7 @@ const NotAuthorized: FC = () => {
       <strong>
         Caso isso seja um erro, entre em contato com o administrador do sistema.
       </strong>
-    </div>
+    </Authorize.Container>
   );
 };
 

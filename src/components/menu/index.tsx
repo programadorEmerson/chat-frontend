@@ -3,20 +3,20 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import { StyledContainer } from '@/components/menu/styles';
+import AppBar from '@/components/appBar';
+import GenerateMenu from '@/components/menu/generateMenu';
+import HeaderMenu from '@/components/menu/headerMenu';
+import { Menu } from '@/components/menu/styles';
 
 import { MenuEnum } from '@/enums/routes';
 
 import { useUserContext } from '@/hooks/useUser';
 
-import GenerateMenu from './generateMenu';
-import HeaderMenu from './headerMenu';
-
 type MenuProps = {
     children: React.ReactNode;
 };
 
-const Menu: FC<MenuProps> = ({ children }) => {
+const MenuApp: FC<MenuProps> = ({ children }) => {
   const { DASHBOARD } = MenuEnum;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -46,44 +46,37 @@ const Menu: FC<MenuProps> = ({ children }) => {
   }, [pathName]);
 
   return (
-    <StyledContainer
-      visibility={fetching ? 'hide' : 'show'}
-      className={'bg-[url("/assets/bg.jpeg")] bg-cover bg-center'}
+    <Menu.Container
+      statusMenu={fetching ? 'hide' : 'show'}
     >
-      <div className='relative flex w-full max-w-screen-xl p-0 rounded-md drop-shadow-md'>
-        <div
-          className={`absolute h-full bg-gray-50 ${!isMenuOpen ? 'w-14' : 'w-52'}
-          ${isMenuOpen && 'drop-shadow-md'} duration-300 overflow-hidden`}
+      <Menu.LayoutMenu>
+        <Menu.ContentItem
+          statusMenu={isMenuOpen ? 'show' : 'hide'}
         >
           <HeaderMenu
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
           />
-          <div className='px-1'>
-            <hr className='h-px my-1 bg-gray-300 border-0' />
-          </div>
+          <Menu.HorizontalLine />
           <GenerateMenu
-            isMenuOpen={isMenuOpen}
             selectedMenu={selectedMenu}
             returnLink={returnLink}
             handleClickMenu={handleClickMenu}
           />
-        </div>
-        <main className={`
-          flex flex-col w-full duration-300
-          ${!isMenuOpen ? 'ml-[57px]' : 'ml-[57px] sm:ml-[57px] md:ml-[57px] lg:ml-52 xl:ml-52'}
-        `}
+        </Menu.ContentItem>
+        <Menu.ContentLayout
+          statusMenu={isMenuOpen ? 'show' : 'hide'}
         >
-          <header className='bg-gray-50 w-full px-4 py-6'>
-            app bar
-          </header>
-          <div className='bg-gray-100 flex flex-col h-full p-3'>
+          <Menu.ContentAppBar>
+            <AppBar />
+          </Menu.ContentAppBar>
+          <Menu.ContentMain>
             {children}
-          </div>
-        </main>
-      </div>
-    </StyledContainer>
+          </Menu.ContentMain>
+        </Menu.ContentLayout>
+      </Menu.LayoutMenu>
+    </Menu.Container>
   );
 };
 
-export default Menu;
+export default MenuApp;

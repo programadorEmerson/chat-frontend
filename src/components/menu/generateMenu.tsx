@@ -9,16 +9,16 @@ import { useAbilities } from '@/hooks/useAbilities';
 
 import { SubjectConstants } from '@/constants/subject.constants';
 
-import Item from './item';
+import ItemMenu from './item';
+import { Menu } from './styles';
 
 type GenerateMenuProps = {
-    isMenuOpen: boolean;
     selectedMenu: MenuEnum;
     handleClickMenu: (menu: MenuEnum) => void;
     returnLink: (menu: MenuEnum) => string;
 }
 
-const GenerateMenu: FC<GenerateMenuProps> = ({ isMenuOpen, selectedMenu, returnLink, handleClickMenu }) => {
+const GenerateMenu: FC<GenerateMenuProps> = ({ selectedMenu, returnLink, handleClickMenu }) => {
   const { abilities : ability } = useAbilities();
 
   function verifyPermission(menu: MenuEnum): boolean {
@@ -36,7 +36,7 @@ const GenerateMenu: FC<GenerateMenuProps> = ({ isMenuOpen, selectedMenu, returnL
   }
 
   return (
-    <div className='w-72 absolute'>
+    <Menu.ContentGeneratedMenu>
       {
         Object.values(MenuEnum)
           .filter((menu) => verifyPermission(menu))
@@ -46,15 +46,14 @@ const GenerateMenu: FC<GenerateMenuProps> = ({ isMenuOpen, selectedMenu, returnL
               href={returnLink(menu)}
               onClick={() => handleClickMenu(menu)}
             >
-              <Item
+              <ItemMenu
                 menu={menu}
-                isMenuOpen={isMenuOpen}
                 selectedMenu={selectedMenu}
               />
             </Link>
           ))
       }
-    </div>
+    </Menu.ContentGeneratedMenu>
   );
 };
 
