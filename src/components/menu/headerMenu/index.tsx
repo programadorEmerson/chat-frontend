@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-import { FaRegWindowClose } from 'react-icons/fa';
-import { HiMenu as InconMenu } from 'react-icons/hi';
+import { HiMenu as InconMenu, HiArrowLeft } from 'react-icons/hi';
 
 import { Header } from './styles';
 
@@ -21,18 +20,13 @@ type HeaderMenuProps = {
 const HeaderMenu: FC<HeaderMenuProps> = ({ isMenuOpen, setIsMenuOpen }) => {
   return (
     <Header.Container>
-      <Header.ContainerAppName statusMenu={isMenuOpen ? 'show' : 'hide'}>
-        <Header.AppName statusMenu={isMenuOpen ? 'show' : 'hide'}>
-          {process.env.NEXT_PUBLIC_APP_NAME}
-        </Header.AppName>
-      </Header.ContainerAppName>
-      <Header.ContentMenuIcon statusMenu={isMenuOpen ? 'show' : 'hide'}>
+      <Header.ContentMenuIcon statusmenu={isMenuOpen ? 'show' : 'hide'}>
         <Header.ButtonMenu
-          statusMenu={isMenuOpen ? 'show' : 'hide'}
+          statusmenu={isMenuOpen ? 'show' : 'hide'}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           type="button"
         >
-          {isMenuOpen ? <FaRegWindowClose size={20} /> : <InconMenu size={20} />}
+          {isMenuOpen ? <HiArrowLeft size={20} /> : <InconMenu size={20} />}
         </Header.ButtonMenu>
       </Header.ContentMenuIcon>
     </Header.Container>

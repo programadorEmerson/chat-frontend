@@ -1,7 +1,7 @@
 import sw from 'tailwind-styled-components';
 
 type ItemProps = {
-    statusMenu: 'selected' | 'unselected';
+    statusmenu: 'selected' | 'unselected';
 };
 
 const Container = sw.section<ItemProps>`
@@ -11,8 +11,8 @@ const Container = sw.section<ItemProps>`
     flex h-8
     hover:bg-blue-50
     hover:cursor-pointer
-    mt-1 group
-    ${({ statusMenu }) => statusMenu === 'selected'
+    mt-[0.1rem] group
+    ${({ statusmenu }) => statusmenu === 'selected'
     ? 'bg-blue-50 drop-shadow-md'
     : 'bg-slate-100'}
 `;
@@ -27,7 +27,7 @@ const ContainerIcon = sw.section<ItemProps>`
     &:nth-child(1) {
         group-hover:text-bluelogo
         duration-1000
-        ${({ statusMenu }) => statusMenu === 'selected' ? 'text-bluelogo' : 'text-slate-700'}
+        ${({ statusmenu }) => statusmenu === 'selected' ? 'text-bluelogo' : 'text-slate-700'}
     }
 `;
 
@@ -35,14 +35,14 @@ const Check = sw.span<ItemProps>`
     duration-500
     font-medium
     text-sm
-    ${({ statusMenu }) => statusMenu === 'selected'
+    ${({ statusmenu }) => statusmenu === 'selected'
     ? 'text-bluelogo ml-3' : 'text-transparent'} 
 `;
 
 const Name = sw.span<ItemProps>`
     duration-500
     font-medium text-sm
-    ${({ statusMenu }) => statusMenu === 'selected' ? 'text-bluelogo ml-2' : 'text-slate-700'}
+    ${({ statusmenu }) => statusmenu === 'selected' ? 'text-bluelogo ml-2' : 'text-slate-700'}
 `;
 
 const ArrowLeft = sw.span<ItemProps>`
@@ -53,13 +53,13 @@ const ArrowLeft = sw.span<ItemProps>`
     ml-0
     text-sm
     text-transparent
-    ${({ statusMenu }) => statusMenu === 'selected' ? 'block' : 'hiden'}
+    ${({ statusmenu }) => statusmenu === 'selected' ? 'block' : 'hiden'}
 `;
 
 const ItemInfo = sw.section<ItemProps>`
     w-52
     pt-1.5 duration-100
-    ${({ statusMenu }) => statusMenu === 'selected' ? 'text-slate-700' : 'text-transparent'}
+    ${({ statusmenu }) => statusmenu === 'selected' ? 'text-slate-700' : 'text-transparent'}
 `;
 
 const Item = {

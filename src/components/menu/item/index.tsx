@@ -26,18 +26,18 @@ const ItemMenu: FC<ItemProps> = ({ selectedMenu, menu }) => {
   const statusMenu = selectedMenu === menu ? 'selected' : 'unselected';
 
   return (
-    <Item.Container statusMenu={statusMenu} >
-      <Item.ContainerIcon statusMenu={statusMenu}>
+    <Item.Container statusmenu={statusMenu} >
+      <Item.ContainerIcon statusmenu={statusMenu}>
         <Icon size={23} />
       </Item.ContainerIcon>
-      <Item.ItemInfo statusMenu={statusMenu}>
-        <Item.Check statusMenu={statusMenu}>
+      <Item.ItemInfo statusmenu={statusMenu}>
+        <Item.Check statusmenu={statusMenu}>
           ✓
         </Item.Check>
-        <Item.Name statusMenu={statusMenu}>
+        <Item.Name statusmenu={statusMenu}>
           {MenuTranslationEnum[menu]}
         </Item.Name>
-        <Item.ArrowLeft statusMenu={statusMenu}>
+        <Item.ArrowLeft statusmenu={statusMenu}>
           ➝
         </Item.ArrowLeft>
       </Item.ItemInfo>

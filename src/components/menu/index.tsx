@@ -62,11 +62,11 @@ const MenuApp: FC<MenuProps> = ({ children }) => {
 
   return (
     <Menu.Container
-      statusMenu={fetching ? 'hide' : 'show'}
+      statusmenu={fetching ? 'hide' : 'show'}
     >
       <Menu.LayoutMenu>
         <Menu.ContentItem
-          statusMenu={isMenuOpen ? 'show' : 'hide'}
+          statusmenu={isMenuOpen ? 'show' : 'hide'}
         >
           <HeaderMenu
             isMenuOpen={isMenuOpen}
@@ -80,7 +80,7 @@ const MenuApp: FC<MenuProps> = ({ children }) => {
           />
         </Menu.ContentItem>
         <Menu.ContentLayout
-          statusMenu={isMenuOpen ? 'show' : 'hide'}
+          statusmenu={isMenuOpen ? 'show' : 'hide'}
         >
           <Menu.ContentAppBar>
             <AppBar />

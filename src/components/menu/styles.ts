@@ -1,7 +1,7 @@
 
 import sw from 'tailwind-styled-components';
 
-type StyledContainerProps = { statusMenu: 'show' | 'hide' }
+type StyledContainerProps = { statusmenu: 'show' | 'hide' }
 
 const Container = sw.section<StyledContainerProps>`
     animate-fadeIn
@@ -15,7 +15,7 @@ const Container = sw.section<StyledContainerProps>`
     justify-center
     w-screen
     bg-[url("/assets/background-image.png")]
-    ${({ statusMenu }) => statusMenu === 'show'
+    ${({ statusmenu }) => statusmenu === 'show'
     ? 'opacity-1 show'
     : 'opacity-0 hide'
 }
@@ -30,7 +30,7 @@ const ContentItem = sw.section<StyledContainerProps>`
     duration-300
     h-full
     overflow-hidden
-    ${({ statusMenu }) => statusMenu === 'hide'
+    ${({ statusmenu }) => statusmenu === 'hide'
     ? 'w-14'
     : 'w-52'}
 `;
@@ -46,7 +46,7 @@ const ContentLayout = sw.main<StyledContainerProps>`
     flex
     flex-col
     w-full
-    ${({ statusMenu }) => statusMenu === 'hide'
+    ${({ statusmenu }) => statusmenu === 'hide'
     ? 'ml-[57px]'
     : 'ml-[57px] sm:ml-[57px] md:ml-[57px] lg:ml-52 xl:ml-52'}
 `;
