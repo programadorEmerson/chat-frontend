@@ -18,11 +18,11 @@ function WebsocketProvider({ children }: { children: ReactNode }) {
   const { user } = useUserContext();
 
   useEffect(() => {
-    if (user) {
-      const api = new ApiService();
-      const token = api.getApiToken();
-      setSocketIo(new Websocket({ user, token }));
-    }
+    // if (user) {
+    const api = new ApiService();
+    const token = api.getApiToken();
+    setSocketIo(new Websocket({ user, token }));
+    // }
   }, [user]);
 
   const shared = useMemo(() => ({

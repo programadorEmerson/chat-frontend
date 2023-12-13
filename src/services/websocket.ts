@@ -50,11 +50,19 @@ class Websocket {
   };
 
   private notAuthenticatedEmitter = () => {
-
     this.notAuthenticatedListeners();
   };
 
-  private notAuthenticatedListeners = () => {};
+  private notAuthenticatedListeners = () => {
+    console.log('estou aqui');
+    this.connection.on('connection', () => {
+      console.log('not authenticated');
+    });
+    this.connection.emit('connection',
+      { id : 1 },
+      { Headers : { Authorization : `Bearer ${'token'}` } },
+    );
+  };
 
   private initializeOnSocket = () => {
     const { user } = this.dataShared;
