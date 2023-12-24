@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  eu-automatizei:
+    build:
+      context: .  # Use the dot to indicate the current directory
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_PORT=${NEXT_PUBLIC_PORT}
+      - NEXT_PUBLIC_ENVIRONMENT=${NEXT_PUBLIC_ENVIRONMENT}
+      - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME}
+      - NEXT_PUBLIC_TOKEN_PREFIX=${NEXT_PUBLIC_TOKEN_PREFIX}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NODE_ENV=development  # Change to 'development' to indicate it's in development mode
+    volumes:
+      - .:/app  # Map the current source code to the container
+    command: yarn start:dev

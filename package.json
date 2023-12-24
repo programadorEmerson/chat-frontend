@@ -3,17 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "build": "next build",
     "start": "next start",
-    "start:dev": "next dev",
+    "start:dev": "next dev -p 3000",
     "build:start": "next build && next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "commit": "git add . && git cz && git push"
+    "commit": "git add . && git cz && git push",
+    "install:ci": "yarn install --frozen-lockfile"
   },
   "dependencies": {
     "@bbbtech/storybook-formik": "^3.0.0",
