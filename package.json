@@ -4,13 +4,17 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": "18"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "build": "next build",
     "start": "next start",
-    "start:dev": "next dev -p 3000",
+    "dev": "next dev -p 3000",
     "build:start": "next build && next start",
+    "docker:start": "docker-compose up",
+    "docker:build": "docker build --no-cache -t eu-automatizei .",
+    "docker:build:test": "if docker images -q eu-automatizei:latest 2> /dev/null; then npm run docker:clean:test; fi && npm run docker:build && docker run -d -p 3000:3000 --name eu-automatizei eu-automatizei",
+    "docker:clean:test": "if docker ps -a --format '{{.Names}}' | grep -q '^eu-automatizei$'; then docker stop eu-automatizei && docker rm eu-automatizei; fi && docker rmi -f eu-automatizei",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",

@@ -15,4 +15,4 @@ services:
       - NODE_ENV=development  # Change to 'development' to indicate it's in development mode
     volumes:
       - .:/app  # Map the current source code to the container
-    command: yarn start:dev
+    command: yarn dev

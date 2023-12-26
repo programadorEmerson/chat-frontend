@@ -14,7 +14,7 @@ const Home = () => {
       <button onClick={() => navgate.push(RoutesEnum.DASHBOARD)}
         type="button"
       >
-        Saturnino
+        Saturnino Dev
       </button>
     </div>
   );
