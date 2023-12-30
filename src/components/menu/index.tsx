@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 
 import { usePathname, useRouter } from 'next/navigation';
 
-import AppBar from '@/components/appBar';
+import AppBar from '@/components/_appBar';
 import GenerateMenu from '@/components/menu/generateMenu';
 import HeaderMenu from '@/components/menu/headerMenu';
 import { Menu } from '@/components/menu/styles';

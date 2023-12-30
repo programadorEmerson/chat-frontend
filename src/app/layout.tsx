@@ -3,7 +3,12 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import AppBarApplication from '@/components/AppBar';
+
 import ContextsProvider from '@/contexts';
+
+import { StyledDefaultLayout } from '@/styles/pages/home';
+import { StyledContainerLimit } from '@/styles/shared';
 
 const inter = Inter({ subsets : ['latin'] });
 
@@ -12,10 +17,15 @@ export const metadata: Metadata = { title : 'Chat App', description : 'Projeto d
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
   return (
-    <html lang='en'>
+    <html lang='pt-br'>
       <body className={inter.className}>
         <ContextsProvider>
-          {children}
+          <AppBarApplication />
+          <StyledDefaultLayout className='bg-slate-50'>
+            <StyledContainerLimit>
+              {children}
+            </StyledContainerLimit>
+          </StyledDefaultLayout>
         </ContextsProvider>
       </body>
     </html>
