@@ -64,26 +64,32 @@ const AppBarApplication = () => {
 
   return (
     <StyledAppBarContainer>
-      <StyledContentMenu status={open ? 'opened' : 'closed'}>
-        <MenuItem
-          open={open}
-          opacity={opacity}
-          title='Dashboard'
-        />
-        <MenuItem
-          open={open}
-          opacity={opacity}
-          title='Clientes'
-        />
-        <MenuItem
-          open={open}
-          opacity={opacity}
-          title='Fornecedores'
-        />
-      </StyledContentMenu>
       <StyledContainerLimit>
-        <StyledContentAppAbar status={open ? 'opened' : 'closed'}>
-          <div className='flex justify-center items-center'>
+        <div className='absolute'>
+          <StyledContentMenu
+            status={open ? 'opened' : 'closed'}
+          >
+            <MenuItem
+              open={open}
+              opacity={opacity}
+              title='Dashboard'
+            />
+            <MenuItem
+              open={open}
+              opacity={opacity}
+              title='Clientes'
+            />
+            <MenuItem
+              open={open}
+              opacity={opacity}
+              title='Fornecedores'
+            />
+          </StyledContentMenu>
+        </div>
+        <StyledContentAppAbar className='px-4'
+          status={open ? 'opened' : 'closed'}
+        >
+          <div className='flex justify-center items-center bo'>
             <button
               type="button"
               onClick={handleToggleMenu}

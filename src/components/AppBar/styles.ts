@@ -24,17 +24,19 @@ export const StyledContentAppAbar = sw('section')<{status: 'opened' | 'closed'}>
 
 export const StyledContentMenu = sw('section')<{status: 'opened' | 'closed'}>`
     flex-col
-    ${({ status }) => (status === 'opened' ? 'w-56' : 'w-16')}
+    ${({ status }) => (status === 'opened' ? 'w-56' : 'w-15')}
     bg-gray-800
     items-start
     justify-center
     absolute
     top-0
     left-0
-    h-[calc(100vh-3.5rem)]
-    mt-14
+    h-[calc(100vh-4.2rem)]
     h-min-screen
-    rounded-tr-md
-    transition-all
+    rounded-md
     pt-0
+    mt-[3.3rem]
+    transition-all
+    duration-500 
+    ease-in-out
 `;

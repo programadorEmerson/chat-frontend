@@ -23,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AppBarApplication />
           <StyledDefaultLayout className='bg-slate-50'>
             <StyledContainerLimit>
-              {children}
+              <section className='pl-16'>
+                {children}
+              </section>
             </StyledContainerLimit>
           </StyledDefaultLayout>
         </ContextsProvider>
