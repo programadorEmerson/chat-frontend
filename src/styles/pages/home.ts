@@ -6,5 +6,6 @@ export const StyledDefaultLayout = sw('section')`
     items-start
     justify-center
     pt-16
-    h-screen bg-[#F4F6F8]
+    h-min-screen
+    bg-[#F4F6F8]
 `;

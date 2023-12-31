@@ -70,7 +70,6 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
         api.post<SigninResponseInterface, SignInInterface>(RoutesRequestsEnum.LOGIN, credentials)
           .then(({ userInfo, accessToken }) => {
             setUser(userInfo);
-            console.log(userInfo);
             setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
             resolve(true);
             router.push(RoutesEnum.DASHBOARD);

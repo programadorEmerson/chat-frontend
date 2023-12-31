@@ -6,5 +6,5 @@ export const StyledContainerLimit = sw('section')`
     shadow
     max-w-screen-xl
     w-full
-    h-full
+    h-min-screen
 `;

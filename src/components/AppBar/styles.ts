@@ -31,7 +31,6 @@ export const StyledContentMenu = sw('section')<{status: 'opened' | 'closed'}>`
     absolute
     top-0
     left-0
-    h-[calc(100vh-4.2rem)]
     h-min-screen
     rounded-md
     pt-0
