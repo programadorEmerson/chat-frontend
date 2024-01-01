@@ -5,13 +5,15 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa';
 
 import Image from 'next/image';
 
+import { StyledContainerLimit } from '@/styles/shared';
+
 import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from 'pure-react-carousel';
 
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const Carrossel = () => {
   return (
-    <section className='w-full justify-center content-center absolute'>
+    <StyledContainerLimit className='w-full justify-center content-center absolute'>
       <CarouselProvider
         naturalSlideWidth={1440}
         naturalSlideHeight={500}
@@ -58,7 +60,7 @@ const Carrossel = () => {
           />
         </ButtonNext>
       </CarouselProvider>
-    </section>
+    </StyledContainerLimit>
   );
 };
 
