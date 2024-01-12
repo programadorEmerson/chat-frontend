@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { FaUserLock } from 'react-icons/fa6';
 import { HiMenu, HiOutlineX } from 'react-icons/hi';
 import { HiOutlineBellAlert, HiOutlineBellSlash } from 'react-icons/hi2';
 import { IoInformationCircleOutline } from 'react-icons/io5';
@@ -200,6 +201,12 @@ const AppBarApplication = () => {
                   >
                     <LuUserCircle2 size={18} />
                     Login
+                  </button>
+                  <button type="button"
+                    className='flex justify-center content-center items-center gap-1'
+                  >
+                    <FaUserLock size={18} />
+                    Cadastre-se
                   </button>
                 </nav>
               )
