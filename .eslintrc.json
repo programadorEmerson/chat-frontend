@@ -47,7 +47,6 @@
     "react/react-in-jsx-scope": "off",
     "eol-last": ["error", "always"],
     "key-spacing": ["error", { "beforeColon": true }],
-    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
     "react/jsx-max-props-per-line": ["error", { "when": "always" }],
     "react/jsx-one-expression-per-line": [
       "error",

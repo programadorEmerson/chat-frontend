@@ -77,7 +77,7 @@ ts-jest é um transformador Jest para TypeScript. Com ele, é possível testar p
 
 NEXT_PUBLIC_ENVIRONMENT=development
 NEXT_PUBLIC_APP_NAME="Eu automatizei"
-NEXT_PUBLIC_TOKEN_PREFIX=eu_automatizei
+NEXT_PUBLIC_REF_PREFIX=eu_automatizei
 NEXT_PUBLIC_API_URL=http://localhost:3001
 NEXT_PUBLIC_PORT=3000
 ```

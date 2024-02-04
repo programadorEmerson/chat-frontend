@@ -7,6 +7,8 @@ import AppBarApplication from '@/components/AppBar';
 
 import ContextsProvider from '@/contexts';
 
+import './_app.css';
+
 import { StyledDefaultLayout } from '@/styles/pages/home';
 import { StyledContainerLimit } from '@/styles/shared';
 

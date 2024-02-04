@@ -19,9 +19,9 @@ import { UserInterface } from '@/interfaces/user.interface';
 
 import notify from '@/utils/notify';
 import notifyWithPromise from '@/utils/notifyPromise';
-import { TOKEN_PREFIX, COOKIE_CONFIG } from '@/utils/tokens';
 import validateToken from '@/utils/validateToken';
 
+import { REF_PREFIX, COOKIE_CONFIG } from '@/constants/ref.constants';
 import schemaSignin from '@/schema/signin.schema';
 
 export interface UserContextProps {
@@ -37,7 +37,7 @@ const UserContext = createContext({} as UserContextProps);
 const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
   const [user, setUser] = useState<UserInterface | null>(null);
   const [fetching, setFetching] = useState<boolean>(true);
-  const { [TOKEN_PREFIX] : token } = parseCookies();
+  const { [REF_PREFIX] : token } = parseCookies();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -50,7 +50,7 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
       setUser(userInfo);
       if(pathname === RoutesEnum.LOGIN) router.push(RoutesEnum.DASHBOARD);
     } catch (error) {
-      destroyCookie(undefined, TOKEN_PREFIX);
+      destroyCookie(undefined, REF_PREFIX);
     } finally {
       setFetching(false);
     }
@@ -58,7 +58,7 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
 
   function signOut(): void {
     setUser(null);
-    destroyCookie(undefined, TOKEN_PREFIX);
+    destroyCookie(undefined, REF_PREFIX);
     router.push(RoutesEnum.LOGIN);
   }
 
@@ -70,7 +70,7 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
         api.post<SigninResponseInterface, SignInInterface>(RoutesRequestsEnum.LOGIN, credentials)
           .then(({ userInfo, accessToken }) => {
             setUser(userInfo);
-            setCookie(undefined, TOKEN_PREFIX, accessToken, { ...COOKIE_CONFIG });
+            setCookie(undefined, REF_PREFIX, accessToken, { ...COOKIE_CONFIG });
             resolve(true);
             router.push(RoutesEnum.DASHBOARD);
           })
@@ -91,7 +91,7 @@ const UserProvider: FC<{ children: ReactNode }> = memo(({ children }) => {
       setFetching(true);
       if (token) {
         if (!validateToken(token)) {
-          destroyCookie(undefined, TOKEN_PREFIX);
+          destroyCookie(undefined, REF_PREFIX);
           setUser(null);
           setFetching(false);
         } else {

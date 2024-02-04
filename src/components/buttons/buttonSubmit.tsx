@@ -4,7 +4,7 @@ import { FormikProps } from 'formik';
 
 import notify from '@/utils/notify';
 
-import { Button } from './styles';
+import { Button } from './styles.buttons';
 
 interface ButtonSubmitProps<T> extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     formik: FormikProps<T>

@@ -10,7 +10,7 @@ import { useAbilities } from '@/hooks/useAbilities';
 import { SubjectConstants } from '@/constants/subject.constants';
 
 import ItemMenu from './item';
-import { Menu } from './styles';
+import { Menu } from './styles.menu';
 
 type GenerateMenuProps = {
     selectedMenu: MenuEnum;

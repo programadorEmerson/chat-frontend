@@ -2,18 +2,32 @@
 
 import React from 'react';
 
-import { usePathname } from 'next/navigation';
-
 import Carrossel from '@/components/LandingPage/Carrossel';
 
-const Home = () => {
-  const currentPath = usePathname();
+import whereAmI from '@/hooks/useImIn';
 
-  const isLandingPage = currentPath === '/';
+const Home = () => {
+
+  const { inCurrentPage } = whereAmI({ reference : '/' });
 
   return (
-    <section className={`${isLandingPage ? 'pl-0' : 'pl-16'} mt-14 w-full min-h-[calc(100vh-3.5rem)]`}>
+    <section className={`${inCurrentPage ? 'pl-0' : 'pl-16'} flex flex-col mt-14 w-full min-h-[calc(100vh-3.5rem)]`}>
       <Carrossel />
+      <div className='h-screen bg-slate-200'
+        id="about"
+      >
+        About
+      </div>
+      <div className='h-screen bg-green-200'
+        id="price"
+      >
+        Price
+      </div>
+      <div className='h-screen bg-yellow-200'
+        id="contact"
+      >
+        contact
+      </div>
     </section>
   );
 };

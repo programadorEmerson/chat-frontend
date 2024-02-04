@@ -13,7 +13,7 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const Carrossel = () => {
   return (
-    <StyledContainerLimit className='w-full justify-center content-center absolute'>
+    <StyledContainerLimit className='w-full justify-center content-center relative'>
       <CarouselProvider
         naturalSlideWidth={1440}
         naturalSlideHeight={500}

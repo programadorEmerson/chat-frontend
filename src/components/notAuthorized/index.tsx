@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { ImagesEnum } from '@/enums/images.enum';
 
-import { Authorize } from './styles';
+import { Authorize } from './styles.not-authorized';
 
 /**
  * NotAuthorized Component.

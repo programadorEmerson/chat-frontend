@@ -4,7 +4,7 @@ import { destroyCookie } from 'nookies';
 
 import { RoutesEnum } from '@/enums/routes';
 
-import { TOKEN_PREFIX } from '@/utils/tokens';
+import { REF_PREFIX } from '@/constants/ref.constants';
 
 import validateToken from './utils/validateToken';
 
@@ -18,16 +18,16 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const { next, redirect } = NextResponse;
 
-  const token = request.cookies.get(TOKEN_PREFIX)?.value;
+  const token = request.cookies.get(REF_PREFIX)?.value;
 
   if (!token && !verifyExtension(pathname)) {
     if (pathname === LOGIN || pathname === INITIAL) return next();
-    destroyCookie(undefined, TOKEN_PREFIX);
+    destroyCookie(undefined, REF_PREFIX);
     return redirect(new URL(LOGIN, request.url));
   }
 
   if (token && !validateToken(token)) {
-    destroyCookie(undefined, TOKEN_PREFIX);
+    destroyCookie(undefined, REF_PREFIX);
     return redirect(new URL(LOGIN, request.url));
   }
 

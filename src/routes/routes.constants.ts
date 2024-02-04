@@ -22,7 +22,16 @@ export type RouteItem = {
     active: boolean;
 };
 
-export const Routes:RouteItem[] = [
+export const Routes: RouteItem[] = [
+  {
+    rule : 'FC0000',
+    subject : 'REGISTER',
+    path : '/register',
+    menuName : 'Cadastro',
+    Icon : GiReceiveMoney,
+    showInMenu : false,
+    active : true,
+  },
   {
     rule : 'FC0001',
     subject : 'DASHBOARD',
@@ -202,6 +211,6 @@ export const Routes:RouteItem[] = [
     Icon : GiReceiveMoney,
     showInMenu : true,
     active : true,
-  }
+  },
 ];
 

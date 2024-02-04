@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { FaUserLock } from 'react-icons/fa6';
 import { HiMenu, HiOutlineX } from 'react-icons/hi';
 import { HiOutlineBellAlert, HiOutlineBellSlash } from 'react-icons/hi2';
@@ -12,6 +12,8 @@ import { VscMail } from 'react-icons/vsc';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import useImIn from '@/hooks/useImIn';
+import { useTranslateContext } from '@/hooks/useTranslate';
 import { useUserContext } from '@/hooks/useUser';
 
 import { StyledContainerLimit } from '@/styles/shared';
@@ -19,7 +21,8 @@ import { StyledContainerLimit } from '@/styles/shared';
 import { Routes } from '@/routes/routes.constants';
 
 import MenuItem from './MenuItem';
-import { StyledAppBarContainer, StyledContentAppAbar, StyledContentMenu } from './styles';
+import { StyledAppBarContainer, StyledContentAppAbar, StyledContentMenu } from './styles.appbar';
+import translationsFileAppBar from './translations.constants';
 
 const notificatons = [
   {
@@ -57,23 +60,18 @@ const notificatons = [
 const AppBarApplication = () => {
   const [open, setOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
-  const currentPath = usePathname();
-
   const { user } = useUserContext();
+  const { inCurrentPage : inPageRegister, goToAnchor } = useImIn({ reference : '/register' });
 
-  const showAsideMenu = Boolean(user && currentPath !== '/');
+  const { translate } = useTranslateContext();
+  const translationsAppBar = translate(translationsFileAppBar);
 
-  function handleToggleMenu() {
-    setOpen(!open);
-  }
+  const showAsideMenu = Boolean(user && usePathname() !== '/');
+
+  const handleToggleMenu = () => setOpen(!open);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        setOpacity(1);
-      }, 100);
-      return;
-    }
+    if (open) setTimeout(() => setOpacity(1), 100);
     setOpacity(0);
   }, [open]);
 
@@ -120,7 +118,7 @@ const AppBarApplication = () => {
                 }
               </button>
             )}
-            <Link href="/">
+            <Link href='/'>
               <strong className={`${showAsideMenu ? 'ml-7' : 'ml-0'} font-normal`}>
                 Eu Automatizei
               </strong>
@@ -178,36 +176,46 @@ const AppBarApplication = () => {
                 </>
               ): (
                 <nav className='gap-4 flex py-2'>
-                  <button type="button"
+
+                  <button onClick={() => goToAnchor('about')}
+                    type="button"
                     className='flex justify-center content-center items-center gap-1'
                   >
+
                     <IoInformationCircleOutline size={20} />
-                    Sobre
+
+                    {translationsAppBar.about}
+
                   </button>
-                  <button type="button"
+
+                  <button onClick={() => goToAnchor('price')}
+                    type="button"
                     className='flex justify-center content-center items-center gap-1'
                   >
                     <IoPricetagsOutline size={18} />
-                    Preço
+                    {translationsAppBar.price}
                   </button>
-                  <button type="button"
+                  <button onClick={() => goToAnchor('contact')}
+                    type="button"
                     className='flex justify-center content-center items-center gap-1'
                   >
                     <VscMail size={18} />
-                    Fale Conosco
+                    {translationsAppBar.contact_us}
                   </button>
                   <button type="button"
                     className='flex justify-center content-center items-center gap-1'
                   >
                     <LuUserCircle2 size={18} />
-                    Login
+                    {translationsAppBar.login}
                   </button>
-                  <button type="button"
-                    className='flex justify-center content-center items-center gap-1'
-                  >
-                    <FaUserLock size={18} />
-                    Cadastre-se
-                  </button>
+                  {!inPageRegister && (
+                    <Link href={Routes[0].path}
+                      className='flex justify-center content-center items-center gap-1'
+                    >
+                      <FaUserLock size={18} />
+                      Cadastre-se
+                    </Link>
+                  )}
                 </nav>
               )
             }

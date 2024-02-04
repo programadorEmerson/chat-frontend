@@ -2,11 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse, AxiosInstance, InternalAxiosR
 
 import { parseCookies } from 'nookies';
 
-import { TOKEN_PREFIX } from '@/utils/tokens';
+import { REF_PREFIX } from '@/constants/ref.constants';
 
 export class ApiService {
   constructor(
-    private token = parseCookies()[`${TOKEN_PREFIX}`],
+    private token = parseCookies()[`${REF_PREFIX}`],
     private apiConfig = axios.create({ baseURL : process.env.NEXT_PUBLIC_API_URL }),
   ) {
     this.initConfig();

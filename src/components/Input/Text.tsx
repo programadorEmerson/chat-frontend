@@ -5,7 +5,7 @@ import { FormikProps } from 'formik';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
-import { Inputs } from './styles';
+import { Inputs } from './styles.input';
 
 export interface InputTextProps<T> extends InputHTMLAttributes<HTMLInputElement> {
   formik: FormikProps<T>

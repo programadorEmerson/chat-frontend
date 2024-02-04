@@ -1,7 +1,14 @@
+'use client';
+
 import React, { FC } from 'react';
 import { ToastContainer } from 'react-toastify';
 
+import theme from '@/styles/theme';
+
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+
 import { AbilityProvider } from './ability.context';
+import { TranslateProvider } from './translate.context';
 import { UserProvider } from './user.context';
 import { WebsocketProvider } from './websocket';
 
@@ -13,14 +20,18 @@ type Props = {
 
 const ContextsProvider: FC<Props> = ({ children }) => {
   return (
-    <UserProvider>
-      <WebsocketProvider>
-        <ToastContainer />
-        <AbilityProvider>
-          {children}
-        </AbilityProvider>
-      </WebsocketProvider>
-    </UserProvider>
+    <StyledThemeProvider theme={theme}>
+      <UserProvider>
+        <WebsocketProvider>
+          <ToastContainer />
+          <AbilityProvider>
+            <TranslateProvider>
+              {children}
+            </TranslateProvider>
+          </AbilityProvider>
+        </WebsocketProvider>
+      </UserProvider>
+    </StyledThemeProvider>
   );
 };
 
