@@ -14,4 +14,9 @@ export const StyledContainerTitle = styled.div<ContainerTitleProps>`
     background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};
     justify-content: ${({ $align }) => $align};
     align-items: center;
+
+    & h6 {
+        font-weight: 500;
+        color: ${({ theme : { colors } }) => colors.text};
+    }
 `;

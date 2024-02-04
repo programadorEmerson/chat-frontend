@@ -6,7 +6,7 @@ import { TitleProps } from './types';
 const Title: FC<TitleProps> = ({ title, align }) => {
   return (
     <StyledContainerTitle $align={align}>
-      {title}
+      <h6>{title}</h6>
     </StyledContainerTitle>
   );
 };

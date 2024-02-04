@@ -23,7 +23,7 @@ const ContextsProvider: FC<Props> = ({ children }) => {
     <StyledThemeProvider theme={theme}>
       <UserProvider>
         <WebsocketProvider>
-          <ToastContainer />
+          <ToastContainer style={{ marginTop : '2.7rem', marginRight : '-1rem' }} />
           <AbilityProvider>
             <TranslateProvider>
               {children}

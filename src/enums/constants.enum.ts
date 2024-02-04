@@ -21,6 +21,7 @@ enum ConstantsEnum {
   // Others
   SUCCESS = 'success',
   ERROR = 'error',
+  WARNING = 'warn',
   READ = 'read',
   CREATE = 'create',
   UPDATE = 'update',
