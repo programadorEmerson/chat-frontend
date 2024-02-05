@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import Logo from '@/components/ImageWrapper';
 import translationsLogo from '@/components/ImageWrapper/translations.constants';
@@ -10,27 +10,50 @@ import Step from '@/components/Step';
 import translationsStep from '@/components/Step/translations.constants';
 import { TranslationKeys } from '@/components/Step/types';
 
+import useFormik from '@/hooks/useFormik';
 import { useTranslateContext } from '@/hooks/useTranslate';
+
+import { UserInterface } from '@/interfaces/user.interface';
 
 import { StyledContainerRegister, StyledContentSteps } from '@/styles/pages/register';
 
 import ImagesConstants from '@/constants/images.constants';
+import translationsFields from '@/translations/shared.translate';
+
+import { initialValues, validationSchema } from './formik.values';
 
 const Register: FC = () => {
   const [activeStep, setActiveStep] = useState(1);
   const { translate } = useTranslateContext();
 
+  const callApi = async (path: string) => console.log(path);
+
   const translationTitle = translate(translationsTitle);
   const translationLogo = translate(translationsLogo);
   const translationStep = translate(translationsStep);
+  const translationFields = translate(translationsFields);
+
+  const { formik, containsError } = useFormik<UserInterface>({
+    initialValues, validationSchema : validationSchema({ translations : translationFields }), callApi
+  });
 
   const getTranslationKey = (step: number) => translationStep[`descriptionStep${step}` as keyof TranslationKeys];
 
   const changeStep = (changeStep: number) => setActiveStep(changeStep);
 
+  useEffect(() => {
+    formik.setErrors({ name : 'xablau' });
+  }, [formik.errors]);
+
   return (
     <section className={'pl-0 mt-14 w-full min-h-[calc(100vh-3.5rem)]'}>
       <StyledContainerRegister>
+        <button onClick={() => {
+          console.log('saturnino', containsError('name'));
+        }}
+        type="button">
+          check Error
+        </button>
         <Logo
           width={209}
           height={133}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledContainerRegister = styled.section`
+export const StyledContainerRegister = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
