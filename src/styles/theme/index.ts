@@ -7,9 +7,11 @@ const theme = {
     warning : '#e67e22',
     background : '#f5f5f5',
     text : '#1F2937',
+    textOpacity : '#8395a7',
     white : '#ffffff',
     debugBackground : '#FFEBEE',
     debugBorder : '#EF9A9A',
+    defaultBorder : '#dfe3e8',
   },
   fonts : {
     primary : 'Inter',

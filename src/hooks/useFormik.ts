@@ -1,3 +1,4 @@
+
 import { useFormik as libFormik, FormikValues } from 'formik';
 
 import * as yup from 'yup';
@@ -36,13 +37,13 @@ const useFormik = <T extends FormikValues>({ initialValues, validationSchema, ca
       const pathParts = reference.trim().split('.');
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const hasTouched = pathParts.reduce((acc: any, key: string) => {
+      const hasTouched: boolean = pathParts.reduce((acc: any, key: string) => {
         if (acc === undefined) return false;
         return acc[key];
       }, formik.touched) || false;
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const hasMessage = pathParts.reduce((acc: any, key: string) => {
+      const hasMessage: string = pathParts.reduce((acc: any, key: string) => {
         if (acc === undefined) return false;
         return acc[key];
       }, formik.errors) || '';
@@ -52,6 +53,11 @@ const useFormik = <T extends FormikValues>({ initialValues, validationSchema, ca
         containsError : (hasTouched && hasMessage !== '')
       };
     }
+
+    return {
+      errorMessage : '',
+      containsError : false
+    };
   };
 
   const handleValue = <T>(reference: string, value: T) => {
@@ -60,8 +66,8 @@ const useFormik = <T extends FormikValues>({ initialValues, validationSchema, ca
     }
   };
 
-  const getValue = (reference: string) => {
-    return checksKeyExistsAndReturnValue({ reference, onlyCheck : false });
+  const getValue = (reference: string): string => {
+    return checksKeyExistsAndReturnValue({ reference, onlyCheck : false }) as unknown as string;
   };
 
   return { formik, containsError, handleValue, getValue };

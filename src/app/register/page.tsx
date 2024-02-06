@@ -1,9 +1,10 @@
 'use client';
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import Logo from '@/components/ImageWrapper';
 import translationsLogo from '@/components/ImageWrapper/translations.constants';
+import { InputText } from '@/components/Inputs';
 import Title from '@/components/Register/Title';
 import translationsTitle from '@/components/Register/Title/translations.constants';
 import Step from '@/components/Step';
@@ -33,7 +34,7 @@ const Register: FC = () => {
   const translationStep = translate(translationsStep);
   const translationFields = translate(translationsFields);
 
-  const { formik, containsError } = useFormik<UserInterface>({
+  const { formik, containsError, getValue, handleValue } = useFormik<UserInterface>({
     initialValues, validationSchema : validationSchema({ translations : translationFields }), callApi
   });
 
@@ -41,19 +42,11 @@ const Register: FC = () => {
 
   const changeStep = (changeStep: number) => setActiveStep(changeStep);
 
-  useEffect(() => {
-    formik.setErrors({ name : 'xablau' });
-  }, [formik.errors]);
-
   return (
     <section className={'pl-0 mt-14 w-full min-h-[calc(100vh-3.5rem)]'}>
-      <StyledContainerRegister>
-        <button onClick={() => {
-          console.log('saturnino', containsError('name'));
-        }}
-        type="button">
-          check Error
-        </button>
+      <StyledContainerRegister
+        onSubmit={formik.handleSubmit}
+        onBlur={formik.handleBlur}>
         <Logo
           width={209}
           height={133}
@@ -81,6 +74,20 @@ const Register: FC = () => {
             ))
           }
         </StyledContentSteps>
+        <InputText
+          formik={formik}
+          name='name'
+          placeholder='Nome'
+          type='text'
+          disabled={false}
+          containsError={containsError}
+          getValue={getValue}
+          handleValue={handleValue}
+        />
+        <button name="xablau"
+          type="submit">
+          Teste Input
+        </button>
       </StyledContainerRegister>
     </section>
   );
