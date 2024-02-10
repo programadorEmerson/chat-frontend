@@ -6,6 +6,8 @@ const theme = {
     error : '#e74c3c',
     warning : '#e67e22',
     background : '#f5f5f5',
+    backgroundContrast : '#ECEFF1',
+    backgroundErrorContrast : '#FFEBEE',
     text : '#1F2937',
     textOpacity : '#8395a7',
     white : '#ffffff',
@@ -22,7 +24,7 @@ const theme = {
     large : '2rem',
   },
   media : {
-    mobile : '@media (max-width: 768px)',
+    mobile : '@media (max-width: 640px)',
   },
 };
 

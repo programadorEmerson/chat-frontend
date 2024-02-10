@@ -10,3 +10,8 @@ export interface UserInterface extends Omit<SignInInterface, 'password'> {
     company: CompanyInterface;
     rules: Rule[];
 }
+
+export interface RegisterUserInterface extends Omit<UserInterface, 'id'> {
+    password: string;
+    confirmPassword: string;
+}

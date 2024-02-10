@@ -1,12 +1,52 @@
-import styled from 'styled-components';
+import styled, { DefaultTheme, css } from 'styled-components';
 
-const StyledFieldSet = styled.fieldset<{
+interface StyledFieldSetProps {
   $containsError: boolean;
   $containsValue: boolean;
-}>`
+  $focus: boolean;
+  theme: DefaultTheme;
+  position: 'top' | 'bottom' | 'left' | 'right';
+}
+
+const borderColor = ({
+  theme,
+  $containsError,
+  $focus,
+}: Partial<StyledFieldSetProps>) => {
+  return $containsError
+    ? theme!.colors.error
+    : $focus
+      ? theme!.colors.primary
+      : theme!.colors.defaultBorder;
+};
+
+const borderPosition = ({ position }: Partial<StyledFieldSetProps>) => {
+  switch (position) {
+  case 'top':
+    return css`
+        border-top: 1px solid ${borderColor};
+      `;
+  case 'bottom':
+    return css`
+        border-bottom: 1px solid ${borderColor};
+      `;
+  case 'left':
+    return css`
+        border-left: 1px solid ${borderColor};
+      `;
+  default:
+    return css`
+        border-right: 1px solid ${borderColor};
+      `;
+  }
+};
+
+const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
   position: relative;
   display: flex;
   flex-direction: column;
+  animation: ${({ $containsError }) =>
+    $containsError && 'shake 0.3s ease-in-out'};
 
   & > span {
     color: ${({ theme }) => theme.colors.error};
@@ -18,25 +58,23 @@ const StyledFieldSet = styled.fieldset<{
 
   & > label {
     position: absolute;
-    top: ${({ $containsValue, $containsError }) =>
-    $containsValue ? '0' : $containsError ? '36%' : '50%'};
+    top: ${({ $containsValue, $containsError, $focus }) =>
+    $containsValue || $focus ? '0' : $containsError ? '37%' : '50%'};
     left: 0.7rem;
-    color: ${({ theme, $containsValue, $containsError }) =>
+    color: ${({ theme, $containsValue, $containsError, $focus }) =>
     $containsError
       ? theme.colors.error
-      : $containsValue
+      : $containsValue || $focus
         ? theme.colors.textOpacity
         : theme.colors.text};
     background-color: ${({ theme }) => theme.colors.background};
     padding: 0 0.2rem;
     transform: translateY(-50%);
-    transition:
-      transform 0.2s ease-in-out,
-      top 0.2s ease-in-out,
-      /* font-size 0.2s ease-in-out, */ color 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     font-size: 0.8rem;
     pointer-events: none;
-    font-size: ${({ $containsValue }) => ($containsValue ? '0.8rem' : '1rem')};
+    font-size: ${({ $containsValue, $focus }) =>
+    $containsValue || $focus ? '0.8rem' : '1rem'};
   }
 
   & > input {
@@ -46,11 +84,11 @@ const StyledFieldSet = styled.fieldset<{
     height: 3rem;
     position: relative;
     width: 100%;
-    border: 1px solid ${({ theme, $containsError }) =>
+    border: 1px solid
+      ${({ theme, $containsError }) =>
     $containsError ? theme.colors.error : theme.colors.defaultBorder};
     border-radius: 0.5rem;
     outline: none;
-    animation: ${({ $containsError }) => $containsError && 'shake 0.3s ease-in-out'};
 
     &:focus + label {
       top: 0;
@@ -68,7 +106,38 @@ const StyledFieldSet = styled.fieldset<{
     color: #919eab;
   }
 
-  @media (max-width: 640px) {
+  & > button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 0;
+    top: ${({ $containsError }) => ($containsError ? '34%' : '47%')};
+    transform: translateY(-50%);
+    background-color: ${({ theme, $containsError }) =>
+    $containsError
+      ? theme.colors.backgroundErrorContrast
+      : theme.colors.backgroundContrast};
+    border: none;
+    color: ${({ theme }) => theme.colors.text};
+    cursor: pointer;
+    padding: 0;
+    height: 3rem;
+    width: 2rem;
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+    ${borderPosition({ position : 'top' })};
+    ${borderPosition({ position : 'right' })};
+    ${borderPosition({ position : 'bottom' })};
+    transition: background-color 0.2s ease-in-out;
+
+    & > svg {
+      font-size: 1.3rem;
+      color: ${({ theme }) => theme.colors.text};
+    }
+  }
+
+  ${({ theme }) => theme.media.mobile} {
     width: 100%;
   }
 

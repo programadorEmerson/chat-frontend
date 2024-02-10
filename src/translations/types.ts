@@ -1,5 +1,6 @@
 type TranslationKeys = {
     name: string;
+    passwordError: string;
     nameError: string;
 };
 

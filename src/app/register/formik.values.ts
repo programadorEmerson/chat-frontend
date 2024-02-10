@@ -1,14 +1,16 @@
 import * as yup from 'yup';
 
-import { UserInterface } from '@/interfaces/user.interface';
+import { RegisterUserInterface, UserInterface } from '@/interfaces/user.interface';
 
 import { TranslationKeys } from '@/translations/types';
 
-export const initialValues:UserInterface  = {
+export const initialValues:RegisterUserInterface  = {
   name : '',
   url_image : '',
   email : '',
   rules : [],
+  password : '',
+  confirmPassword : '',
   company : {
     name : '',
     document : '',
@@ -30,5 +32,6 @@ export const validationSchema = ({ translations }: {translations: TranslationKey
 
   return yup.object<UserInterface>({
     name : yup.string().required(translations.nameError),
+    password : yup.string().required(translations.passwordError),
   });
 };

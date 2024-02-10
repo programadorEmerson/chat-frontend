@@ -76,6 +76,16 @@ const Register: FC = () => {
         </StyledContentSteps>
         <InputText
           formik={formik}
+          name='password'
+          placeholder='Senha'
+          type='password'
+          disabled={false}
+          containsError={containsError}
+          getValue={getValue}
+          handleValue={handleValue}
+        />
+        <InputText
+          formik={formik}
           name='name'
           placeholder='Nome'
           type='text'
