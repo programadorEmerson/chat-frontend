@@ -1,3 +1,5 @@
+import { debugMode } from '@/styles/shared.style';
+
 import styled from 'styled-components';
 
 type ImageWrapperProps = {
@@ -17,15 +19,13 @@ const StyledImageWrapper = styled.section<ImageWrapperProps>`
     justify-content: center;
     gap: 0.3rem;
     padding: 0.5rem;
-    border: ${({ theme : { colors }, $debug }) => ($debug ? `1px solid ${colors.debugBorder}` : 'none')};
-    background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};
+    ${debugMode}
 
     & img {
         transition: all 0.3s ease;
         width: 100%;
         height: auto;
-        border: ${({ theme : { colors }, $debug }) => ($debug ? `1px solid ${colors.debugBorder}` : 'none')};
-        background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};    
+        ${debugMode}   
 
         &:hover {
             opacity: 0.8;
@@ -35,8 +35,7 @@ const StyledImageWrapper = styled.section<ImageWrapperProps>`
     & span {
         font-weight: 700;
         color: ${({ theme : { colors } }) => colors.text};
-        border: ${({ theme : { colors }, $debug }) => ($debug ? `1px solid ${colors.debugBorder}` : 'none')};
-        background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};
+        ${debugMode}
     }
 `;
 

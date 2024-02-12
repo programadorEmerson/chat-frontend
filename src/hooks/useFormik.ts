@@ -1,4 +1,6 @@
 
+import { useState } from 'react';
+
 import { useFormik as libFormik, FormikValues } from 'formik';
 
 import * as yup from 'yup';
@@ -12,12 +14,16 @@ type UseFormikType<T extends FormikValues> = {
 };
 
 const useFormik = <T extends FormikValues>({ initialValues, validationSchema, callApi }: UseFormikType<T>) => {
+  const [loading, setLoading] = useState(false);
+
   const formik = libFormik<T>({
     initialValues,
     validationSchema,
     enableReinitialize : true,
     onSubmit : async (values) => {
+      setLoading(true);
       await callApi('/api/submit', values);
+      setLoading(false);
     },
   });
 
@@ -70,7 +76,7 @@ const useFormik = <T extends FormikValues>({ initialValues, validationSchema, ca
     return checksKeyExistsAndReturnValue({ reference, onlyCheck : false }) as unknown as string;
   };
 
-  return { formik, containsError, handleValue, getValue };
+  return { formik, loading, containsError, handleValue, getValue };
 };
 
 export default useFormik;

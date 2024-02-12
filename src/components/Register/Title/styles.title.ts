@@ -1,3 +1,5 @@
+import { debugMode } from '@/styles/shared.style';
+
 import styled from 'styled-components';
 
 import { AlignProps } from './types';
@@ -10,13 +12,14 @@ type ContainerTitleProps = {
 export const StyledContainerTitle = styled.div<ContainerTitleProps>`
     display: flex;
     width: 100%;
-    border: ${({ theme : { colors }, $debug }) => ($debug ? `1px solid ${colors.debugBorder}` : 'none')};
-    background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};
     justify-content: ${({ $align }) => $align};
     align-items: center;
+    margin-top: 0.5rem;
+    ${debugMode}
 
     & h6 {
         font-weight: 500;
         color: ${({ theme : { colors } }) => colors.text};
+        ${debugMode}
     }
 `;

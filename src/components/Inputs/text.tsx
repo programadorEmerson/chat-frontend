@@ -8,10 +8,11 @@ import { FormikProps } from 'formik';
 import StyledFieldSet from './styles.text';
 
 interface InputTextProps<T> {
+    width: number;
     formik: FormikProps<T>
     name: string;
     placeholder: string;
-    type: 'text' | 'password';
+    type: 'text' | 'password' | 'email' | 'number';
     disabled: boolean;
     getValue: (reference: string) => string;
     handleValue: <T>(reference: string, value: T) => void;
@@ -34,6 +35,7 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
       $containsError={containsError}
       $containsValue={(getValue(props.name).length > 0)}
       $focus={focus}
+      width={Number(props.width)}
     >
       <input
         name={props.name}
@@ -55,7 +57,7 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
         )
       }
       <label htmlFor={props.name}>{placeholder}</label>
-      <span>{errorMessage}</span>
+      {containsError && <span>{errorMessage}</span>}
     </StyledFieldSet>
   );
 };

@@ -1,3 +1,5 @@
+import { debugMode } from '@/styles/shared.style';
+
 import styled from 'styled-components';
 
 type StepProps = {
@@ -11,9 +13,8 @@ const StyledStep = styled.section<StepProps>`
     width: ${({ $lastStep }) => ($lastStep ? 'auto' : '20%')};
     align-items: center;
     justify-content: flex-start;
-    border: ${({ theme : { colors }, $debug }) => ($debug ? `1px solid ${colors.debugBorder}` : 'none')};
-    background-color: ${({ theme : { colors }, $debug }) => ($debug ? colors.debugBackground : 'transparent')};
     padding: 0.1rem;
+    ${debugMode}
 
     & > button {
         display: flex;
@@ -26,15 +27,9 @@ const StyledStep = styled.section<StepProps>`
         transition: opacity 0.3s;
         margin-right: 0.2rem;
         margin-left: 0.6rem;
-
-        border: ${({ theme : { colors }, $debug, $active }) => ($debug
-    ? `1px solid ${colors.debugBorder}`
-    : $active ? colors.warning : colors.primary)
-};
-        background-color: ${({ theme : { colors }, $debug, $active }) => ($debug
-    ? colors.debugBackground
-    : $active ? colors.warning : colors.primary)
-};
+        border: ${({ theme : { colors }, $active }) => ($active ? colors.warning : colors.primary)};
+        background-color: ${({ theme : { colors }, $active }) => ($active ? colors.warning : colors.primary)};
+        ${debugMode}
         
         &:hover {
             opacity: 0.8;
@@ -42,6 +37,7 @@ const StyledStep = styled.section<StepProps>`
         
         & > span {
             color: ${({ theme : { colors } }) => colors.white};
+            ${debugMode}
         }
     }
 
@@ -50,6 +46,7 @@ const StyledStep = styled.section<StepProps>`
         font-weight: 500;
         font-size: 0.9rem;
         text-transform: uppercase;
+        ${debugMode}
     }
 
     & > hr {
@@ -59,6 +56,7 @@ const StyledStep = styled.section<StepProps>`
         height: 0.1rem;
         border: 1px solid ${({ theme : { colors } }) => colors.primary};
         border-style: dashed;
+        ${debugMode}
     }
 `;
 

@@ -16,7 +16,11 @@ import { useTranslateContext } from '@/hooks/useTranslate';
 
 import { UserInterface } from '@/interfaces/user.interface';
 
-import { StyledContainerRegister, StyledContentSteps } from '@/styles/pages/register';
+import {
+  StyledContainerInputs, StyledContainerRegister,
+  StyledContentInputs, StyledContentSteps, StyledFooterActions, StyledSectionActions
+} from '@/styles/pages/register';
+import { StyledHr } from '@/styles/shared.style';
 
 import ImagesConstants from '@/constants/images.constants';
 import translationsFields from '@/translations/shared.translate';
@@ -34,7 +38,7 @@ const Register: FC = () => {
   const translationStep = translate(translationsStep);
   const translationFields = translate(translationsFields);
 
-  const { formik, containsError, getValue, handleValue } = useFormik<UserInterface>({
+  const { formik, loading, containsError, getValue, handleValue } = useFormik<UserInterface>({
     initialValues, validationSchema : validationSchema({ translations : translationFields }), callApi
   });
 
@@ -74,30 +78,107 @@ const Register: FC = () => {
             ))
           }
         </StyledContentSteps>
-        <InputText
-          formik={formik}
-          name='password'
-          placeholder='Senha'
-          type='password'
-          disabled={false}
-          containsError={containsError}
-          getValue={getValue}
-          handleValue={handleValue}
-        />
-        <InputText
-          formik={formik}
-          name='name'
-          placeholder='Nome'
-          type='text'
-          disabled={false}
-          containsError={containsError}
-          getValue={getValue}
-          handleValue={handleValue}
-        />
-        <button name="xablau"
-          type="submit">
-          Teste Input
-        </button>
+        <StyledContainerInputs>
+          <StyledContentInputs>
+            <InputText
+              formik={formik}
+              name='company.name'
+              placeholder='Nome da empresa'
+              type='text'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={50}
+            />
+            <InputText
+              formik={formik}
+              name='company.document'
+              placeholder='CPF/CNPJ'
+              type='number'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={20}
+            />
+            <InputText
+              formik={formik}
+              name='company.email'
+              placeholder='Email'
+              type='email'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={30}
+            />
+            <InputText
+              formik={formik}
+              name='company.phone'
+              placeholder='Telefone'
+              type='email'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={20}
+            />
+            <InputText
+              formik={formik}
+              name='company.address'
+              placeholder='Endereço'
+              type='text'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={30}
+            />
+            <InputText
+              formik={formik}
+              name='company.zip_code'
+              placeholder='CEP'
+              type='text'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={15}
+            />
+            <InputText
+              formik={formik}
+              name='company.state'
+              placeholder='Estado'
+              type='text'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={10}
+            />
+            <InputText
+              formik={formik}
+              name='company.city'
+              placeholder='Cidade'
+              type='text'
+              disabled={loading}
+              containsError={containsError}
+              getValue={getValue}
+              handleValue={handleValue}
+              width={24.7}
+            />
+          </StyledContentInputs>
+          <StyledHr />
+          <StyledFooterActions>
+            <StyledSectionActions align='left'>
+              Anterior
+            </StyledSectionActions>
+            <StyledSectionActions align='right'>
+              Próxima
+            </StyledSectionActions>
+          </StyledFooterActions>
+        </StyledContainerInputs>
       </StyledContainerRegister>
     </section>
   );
