@@ -4,7 +4,7 @@ import React, { FC, useState } from 'react';
 
 import Logo from '@/components/ImageWrapper';
 import translationsLogo from '@/components/ImageWrapper/translations.constants';
-import { InputText } from '@/components/Inputs';
+import { InputSelect, InputText } from '@/components/Inputs';
 import Title from '@/components/Register/Title';
 import translationsTitle from '@/components/Register/Title/translations.constants';
 import Step from '@/components/Step';
@@ -14,7 +14,7 @@ import { TranslationKeys } from '@/components/Step/types';
 import useFormik from '@/hooks/useFormik';
 import { useTranslateContext } from '@/hooks/useTranslate';
 
-import { UserInterface } from '@/interfaces/user.interface';
+import { RegisterUserInterface } from '@/interfaces/user.interface';
 
 import {
   StyledContainerInputs, StyledContainerRegister,
@@ -23,9 +23,9 @@ import {
 import { StyledHr } from '@/styles/shared.style';
 
 import ImagesConstants from '@/constants/images.constants';
-import translationsFields from '@/translations/shared.translate';
 
 import { initialValues, validationSchema } from './formik.values';
+import tanslationsFieldsRegister from './translate';
 
 const Register: FC = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -36,10 +36,10 @@ const Register: FC = () => {
   const translationTitle = translate(translationsTitle);
   const translationLogo = translate(translationsLogo);
   const translationStep = translate(translationsStep);
-  const translationFields = translate(translationsFields);
+  const tanslationsRegister = translate(tanslationsFieldsRegister);
 
-  const { formik, loading, containsError, getValue, handleValue } = useFormik<UserInterface>({
-    initialValues, validationSchema : validationSchema({ translations : translationFields }), callApi
+  const { formik, loading, containsError, getValue, handleValue } = useFormik<RegisterUserInterface>({
+    initialValues, validationSchema : validationSchema({ translations : tanslationsRegister }), callApi
   });
 
   const getTranslationKey = (step: number) => translationStep[`descriptionStep${step}` as keyof TranslationKeys];
@@ -146,27 +146,41 @@ const Register: FC = () => {
               handleValue={handleValue}
               width={15}
             />
-            <InputText
+            <InputSelect
               formik={formik}
               name='company.state'
               placeholder='Estado'
-              type='text'
               disabled={loading}
               containsError={containsError}
               getValue={getValue}
               handleValue={handleValue}
-              width={10}
+              valuesList={[
+                {
+                  key : 'SP', value : 'São Paulo'
+                },
+                {
+                  key : 'RJ', value : 'Rio de Janeiro'
+                },
+              ]}
+              width={13}
             />
-            <InputText
+            <InputSelect
               formik={formik}
               name='company.city'
               placeholder='Cidade'
-              type='text'
               disabled={loading}
               containsError={containsError}
               getValue={getValue}
               handleValue={handleValue}
-              width={24.7}
+              valuesList={[
+                {
+                  key : 'VGS', value : 'Vargem Grande do Sul'
+                },
+                {
+                  key : 'SP', value : 'São Paulo'
+                },
+              ]}
+              width={21.7}
             />
           </StyledContentInputs>
           <StyledHr />

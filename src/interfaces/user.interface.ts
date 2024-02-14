@@ -7,8 +7,9 @@ export interface UserInterface extends Omit<SignInInterface, 'password'> {
     id?: number;
     name: string;
     url_image: string;
-    company: CompanyInterface;
+    email: string;
     rules: Rule[];
+    company: CompanyInterface;
 }
 
 export interface RegisterUserInterface extends Omit<UserInterface, 'id'> {

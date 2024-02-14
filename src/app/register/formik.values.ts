@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 
-import { RegisterUserInterface, UserInterface } from '@/interfaces/user.interface';
+import { RegisterUserInterface } from '@/interfaces/user.interface';
 
-import { TranslationKeys } from '@/translations/types';
+import { TranslationKeys } from './types';
 
 export const initialValues:RegisterUserInterface  = {
   name : '',
@@ -28,10 +28,23 @@ export const initialValues:RegisterUserInterface  = {
   }
 };
 
-export const validationSchema = ({ translations }: {translations: TranslationKeys} ) => {
+export const validationSchema = ({ translations }: { translations: TranslationKeys }) => {
+  const prohibitedValue = 'select';
 
-  return yup.object<UserInterface>({
-    name : yup.string().required(translations.nameError),
-    password : yup.string().required(translations.passwordError),
+  return yup.object<RegisterUserInterface>({
+    name : yup.string().required(translations.name),
+    password : yup.string().required(translations.password),
+    company : yup.object({
+      name : yup.string().required(translations.companyName),
+      document : yup.string().required(translations.companyDocument),
+      email : yup.string().email(translations.companyEmailInvalid).required(translations.companyEmail),
+      phone : yup.string().required(translations.companyPhone),
+      address : yup.string().required(translations.companyAdress),
+      city : yup.string().required(translations.companyCity)
+        .notOneOf([prohibitedValue], translations.companyCityInfor),
+      state : yup.string().required(translations.companyState)
+        .notOneOf([prohibitedValue], translations.companyStateInfor),
+      zip_code : yup.string().required(translations.companyZipCode),
+    }),
   });
 };

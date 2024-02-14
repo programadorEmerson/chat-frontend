@@ -77,13 +77,13 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     $containsValue || $focus ? '0.8rem' : '1rem'};
   }
 
-  & > input {
+  & > input, select {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     padding: 14px 1rem;
     width: 100%;
     height: 3rem;
-    appearance: none;
+    /* appearance: none; */
     position: relative;
     border: 1px solid
       ${({ theme, $containsError }) =>
@@ -92,7 +92,7 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     outline: none;
     margin-top: 0.2rem;
 
-    &:focus + label {
+    &:focus + label + select {
       top: 0.25rem;
       transform: translateY(-50%);
       font-size: 0.8rem;
@@ -106,6 +106,11 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     ${({ theme }) => theme.media.mobile} {
       width: 100%;
     }
+
+  }
+  
+  & select {
+    top: 0.25rem;
   }
 
   & input[type="number"] {
@@ -120,9 +125,11 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
       margin: 0;
   }
 
-  & > input:disabled {
+  & > input:disabled,
+  & > select:disabled {
     color: #919eab;
   }
+
 
   & > button {
     position: absolute;
@@ -173,6 +180,71 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     75% {
       transform: translateX(-3px);
     }
+  }
+`;
+
+export const StyledFieldSetSelect = styled.fieldset<Partial<StyledFieldSetProps>>`
+  position: relative;
+  display: flex;
+  width: ${({ width }) => `calc(${width}% - 0.4rem)`};
+  flex-direction: column;
+
+  & > span {
+    color: ${({ theme }) => theme.colors.error};
+    font-size: 0.8rem;
+    margin: 0.2rem 0 0.3rem 0.9rem;
+  }
+
+  & > label {
+    position: absolute;
+    top: -0.4rem;
+    left: 0.7rem;
+    color: ${({ theme, $containsError }) =>
+    $containsError
+      ? theme.colors.error
+      : theme.colors.textOpacity};
+    background-color: ${({ theme }) => theme.colors.background};
+    padding: 0 0.2rem;
+    font-size: 0.8rem;
+  }
+
+  & > select {
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme, $containsError }) => ($containsError ? theme.colors.error : theme.colors.text)};
+    padding: 14px 1rem;
+    width: 100%;
+    height: 3rem;
+    position: relative;
+    border: 1px solid
+      ${({ theme, $containsError }) =>
+    $containsError ? theme.colors.error : theme.colors.defaultBorder};
+    border-radius: 0.5rem;
+    outline: none;
+    margin-top: 0.2rem;
+
+    & > label {
+      top: 0.25rem;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+    }
+
+    &:focus {
+      border-color: ${({ theme, $containsError }) =>
+    $containsError ? theme.colors.error : theme.colors.primary};
+    }
+
+    ${({ theme }) => theme.media.mobile} {
+      width: 100%;
+    }
+
+  }
+
+  & > select:disabled {
+    color: #919eab;
+  }
+
+  ${({ theme }) => theme.media.mobile} {
+    width: 100%;
   }
 `;
 

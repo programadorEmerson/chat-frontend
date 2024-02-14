@@ -120,7 +120,7 @@ const AppBarApplication = () => {
             )}
             <Link href='/'>
               <strong className={`${showAsideMenu ? 'ml-7' : 'ml-0'} font-normal`}>
-                Eu Automatizei
+                Simple System
               </strong>
             </Link>
           </div>
