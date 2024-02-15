@@ -44,9 +44,15 @@ const StyledStep = styled.section<StepProps>`
     & > span {
         color: ${({ theme : { colors } }) => colors.text};
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: ${({ theme : { fontSizes } }) => fontSizes.small};
         text-transform: uppercase;
         ${debugMode}
+
+        & > svg {
+            color: ${({ theme : { colors } }) => colors.text};
+            font-size: ${({ theme : { fontSizes } }) => fontSizes.medium};
+            margin-left: 0.3rem;
+        }
     }
 
     & > hr {

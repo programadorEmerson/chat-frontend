@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import sw from 'tailwind-styled-components';
 
 export const StyledAppBarContainer = sw('section')`
@@ -14,12 +15,27 @@ export const StyledAppBarContainer = sw('section')`
     absolute
 `;
 
-export const StyledContentAppAbar = sw('section')<{status: 'opened' | 'closed'}>`
-    w-full
-    flex
-    justify-between
-    items-center
-    transition-all
+export const StyledContentAppAbar = styled.section<{status: 'opened' | 'closed'}>`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+
+    ${({ theme }) => theme.media.mobile} {
+        justify-content: center;
+    }
+
+    & > div {
+
+        & > a {
+            display: flex;
+
+            ${({ theme }) => theme.media.mobile} {
+                display: none;
+            }
+        }
+    }
 `;
 
 export const StyledContentMenu = sw('section')<{status: 'opened' | 'closed'}>`

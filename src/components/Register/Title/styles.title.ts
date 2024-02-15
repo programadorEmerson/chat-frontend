@@ -20,6 +20,11 @@ export const StyledContainerTitle = styled.div<ContainerTitleProps>`
     & h6 {
         font-weight: 500;
         color: ${({ theme : { colors } }) => colors.text};
+        text-align: ${({ $align }) => $align};
         ${debugMode}
+
+        ${({ theme }) => theme.media.mobile} {
+            text-align: center
+        }
     }
 `;

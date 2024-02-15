@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { HiArrowNarrowRight } from 'react-icons/hi';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
@@ -9,6 +10,7 @@ import StyledStep from './styles.step';
 type StepProps = {
   step: number;
   activeStep: number;
+  isMobile: boolean;
   completeStep: boolean;
   message: string;
   lastStep: boolean;
@@ -17,7 +19,7 @@ type StepProps = {
 };
 
 export const Step: FC<StepProps> = ({
-  step, activeStep, completeStep, message, lastStep, descriptionStep, changeStep
+  step, activeStep, isMobile, completeStep, message, lastStep, descriptionStep, changeStep,
 }) => {
   const { WARNING : type } = ConstantsEnum;
   const toastId = String(step);
@@ -41,9 +43,9 @@ export const Step: FC<StepProps> = ({
         </span>
       </button>
       <span>
-        {descriptionStep}
+        {isMobile ? !lastStep && <HiArrowNarrowRight /> : descriptionStep}
       </span>
-      {!lastStep && <hr />}
+      {(!lastStep && !isMobile) && <hr />}
     </StyledStep>
   );
 };

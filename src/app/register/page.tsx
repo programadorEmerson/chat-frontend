@@ -11,6 +11,7 @@ import Step from '@/components/Step';
 import translationsStep from '@/components/Step/translations.constants';
 import { TranslationKeys } from '@/components/Step/types';
 
+import useIsMobile from '@/hooks/useDeviceType';
 import useFormik from '@/hooks/useFormik';
 import { useTranslateContext } from '@/hooks/useTranslate';
 
@@ -29,14 +30,17 @@ import tanslationsFieldsRegister from './translate';
 
 const Register: FC = () => {
   const [activeStep, setActiveStep] = useState(1);
-  const { translate } = useTranslateContext();
 
-  const callApi = async (path: string) => console.log(path);
+  const { isMobile } = useIsMobile();
+
+  const { translate } = useTranslateContext();
 
   const translationTitle = translate(translationsTitle);
   const translationLogo = translate(translationsLogo);
   const translationStep = translate(translationsStep);
   const tanslationsRegister = translate(tanslationsFieldsRegister);
+
+  const callApi = async (path: string) => console.log(path);
 
   const { formik, loading, containsError, getValue, handleValue } = useFormik<RegisterUserInterface>({
     initialValues, validationSchema : validationSchema({ translations : tanslationsRegister }), callApi
@@ -73,6 +77,7 @@ const Register: FC = () => {
                 lastStep={step === 4}
                 message={translationStep.messageWarning}
                 descriptionStep={getTranslationKey(step)}
+                isMobile={isMobile}
                 step={step}
               />
             ))

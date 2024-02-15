@@ -33,7 +33,7 @@ const AppBar: FC = () => {
           </Styled.Actions>
           <Styled.UserInfo>
             <Styled.UserImage
-              src={user.urlImage}
+              src={user.url_image}
               alt={`${InfoEnum.IMAGE_OF_USER} ${user.name}`}
             />
             <Styled.UserDetails>
