@@ -8,6 +8,7 @@ import theme from '@/styles/theme';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 
 import { AbilityProvider } from './ability.context';
+import { LocalizationProvider } from './localization.context';
 import { TranslateProvider } from './translate.context';
 import { UserProvider } from './user.context';
 import { WebsocketProvider } from './websocket';
@@ -26,7 +27,9 @@ const ContextsProvider: FC<Props> = ({ children }) => {
           <ToastContainer style={{ marginTop : '2.7rem', marginRight : '-1rem' }} />
           <AbilityProvider>
             <TranslateProvider>
-              {children}
+              <LocalizationProvider>
+                {children}
+              </LocalizationProvider>
             </TranslateProvider>
           </AbilityProvider>
         </WebsocketProvider>

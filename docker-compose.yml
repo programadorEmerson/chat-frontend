@@ -10,7 +10,6 @@ services:
       - NEXT_PUBLIC_PORT=${NEXT_PUBLIC_PORT}
       - NEXT_PUBLIC_ENVIRONMENT=${NEXT_PUBLIC_ENVIRONMENT}
       - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME}
-      - NEXT_PUBLIC_REF_PREFIX=${NEXT_PUBLIC_REF_PREFIX}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
       - NODE_ENV=development  # Change to 'development' to indicate it's in development mode
     volumes:

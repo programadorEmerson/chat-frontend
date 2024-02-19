@@ -3,7 +3,7 @@ import React, { FC, memo } from 'react';
 import { ImagesEnum } from '@/enums/images.enum';
 import { InfoEnum } from '@/enums/info.enum';
 
-import { Styled } from './styles';
+import { Styled } from './styles.guard-routes';
 
 /**
  * Loading - Displays a loading image.

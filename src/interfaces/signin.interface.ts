@@ -1,4 +1,4 @@
-import { UserInterface } from './user.interface';
+import { User } from './user.interface';
 
 const initialValuesSignin:SignInInterface  = {
   email : 'emerson@saturnino.com.br',
@@ -14,7 +14,7 @@ interface SigninResponseInterface {
   statusCode: number,
   ok: boolean,
   accessToken: string;
-  userInfo: UserInterface
+  userInfo: User
 }
 
 export { type SignInInterface, type SigninResponseInterface, initialValuesSignin };

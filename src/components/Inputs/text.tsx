@@ -5,6 +5,10 @@ import { BsEye as ShowPassIcon, BsEyeSlash as HidePassIcon } from 'react-icons/b
 
 import { FormikProps } from 'formik';
 
+import cepMask from '@/utils/cepMask';
+import cpfCnpjMask from '@/utils/cpfCnpjMask';
+import phoneMask from '@/utils/phoneMask';
+
 import StyledFieldSet from './styles.text';
 
 interface InputTextProps<T> {
@@ -15,7 +19,6 @@ interface InputTextProps<T> {
     type: 'text' | 'password' | 'email' | 'number';
     disabled: boolean;
     getValue: (reference: string) => string;
-    handleValue: <T>(reference: string, value: T) => void;
     containsError: (reference: string) => { errorMessage: string; containsError: boolean }
 }
 
@@ -30,6 +33,13 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
   const toggleShowPassword = () => setShowPassword(!showPassword);
   const toggleFocus = () => setFocus(!focus);
 
+  const verifyMask = (value: string): string => {
+    if (/(\.|^)zip_code$/.test(props.name)) return cepMask(value);
+    if (/(\.|^)document$/.test(props.name)) return cpfCnpjMask(value);
+    if (/(\.|^)phone$/.test(props.name)) return phoneMask(value);
+    return value;
+  };
+
   return (
     <StyledFieldSet
       $containsError={containsError}
@@ -41,8 +51,8 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
         name={props.name}
         disabled={disabled}
         onFocus={toggleFocus}
-        value={getValue(props.name)}
-        onChange={(e) => props.handleValue(props.name, e.target.value)}
+        value={verifyMask(getValue(props.name))}
+        onChange={props.formik.handleChange}
         onBlur={(e) => { props.formik.handleBlur(e); setFocus(false); }}
         type={isPasswordField ? showPassword ? 'text' : 'password' : type}
       />

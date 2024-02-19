@@ -14,7 +14,6 @@ interface InputSelectProps<T> {
     disabled: boolean;
     valuesList: {key: string, value: string}[];
     getValue: (reference: string) => string;
-    handleValue: <T>(reference: string, value: T) => void;
     containsError: (reference: string) => { errorMessage: string; containsError: boolean }
 }
 
@@ -26,6 +25,14 @@ const InputSelect: <T>(props: InputSelectProps<T>) => JSX.Element = (props): JSX
   const { containsError, errorMessage } = props.containsError(props.name);
 
   const toggleFocus = () => setFocus(!focus);
+
+  const removeDuplicatesIfExists = () => {
+    const values = props.valuesList.map((item) => item.value);
+    return Array.from(new Set(values)).map((value) => {
+      const key = props.valuesList.find((item) => item.value === value)?.key;
+      return { key, value };
+    });
+  };
 
   return (
     <StyledFieldSetSelect
@@ -39,19 +46,13 @@ const InputSelect: <T>(props: InputSelectProps<T>) => JSX.Element = (props): JSX
         disabled={disabled}
         onFocus={toggleFocus}
         value={getValue(props.name)}
-        onChange={(e) => props.handleValue(props.name, e.target.value)}
+        onChange={props.formik.handleChange}
         onBlur={(e) => { props.formik.handleBlur(e); setFocus(false); }}
       >
-        <option
-          value='select'
-          defaultValue="Selecione"
-        >
-          Selecione
-        </option>
         {
-          props.valuesList.map((item) => (
+          removeDuplicatesIfExists().map((item, index) => (
             <option
-              key={item.key}
+              key={index}
               value={item.key}>
               {item.value}
             </option>

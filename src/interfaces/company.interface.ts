@@ -1,19 +1,38 @@
-import { SignInInterface } from './signin.interface';
+import { User } from './user.interface';
 
-interface CompanyTopUp {
-  recharge: number;
+export interface PlanInformation {
+  plan: string;
+  last_recharge: number;
+  remaining_balance: number;
   recharge_payment_method: string;
 }
 
-export interface CompanyInterface extends Omit<SignInInterface, 'password'> {
-  name: string;
-  document: string;
-  email: string;
-  phone: string;
+export interface Address {
   address: string;
+  number: string;
+  complement: string;
+  district: string;
   city: string;
   state: string;
-  zip_code: string;
-  plan: string;
-  company_top_up: CompanyTopUp;
 }
+
+export interface General {
+  name : string,
+  document : string,
+  email : string,
+  phone: string,
+}
+
+export interface CompanyRegister {
+  address: Address,
+  user: UserRegister;
+  company: General;
+  plan_information: PlanInformation;
+}
+
+export interface UserRegister extends Omit<User, 'rules' | 'id' | 'company'> {
+  password: string;
+  confirmPassword: string;
+}
+
+export interface Company extends Omit<CompanyRegister, 'user'> { }

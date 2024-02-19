@@ -1,21 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, { FC, useState } from 'react';
 
+import { useFormik } from 'formik';
+
 import Logo from '@/components/ImageWrapper';
-import translationsLogo from '@/components/ImageWrapper/translations.constants';
-import { InputSelect, InputText } from '@/components/Inputs';
+import { CompanyForm } from '@/components/register';
 import Title from '@/components/Register/Title';
-import translationsTitle from '@/components/Register/Title/translations.constants';
 import Step from '@/components/Step';
-import translationsStep from '@/components/Step/translations.constants';
-import { TranslationKeys } from '@/components/Step/types';
-
-import useIsMobile from '@/hooks/useDeviceType';
-import useFormik from '@/hooks/useFormik';
-import { useTranslateContext } from '@/hooks/useTranslate';
-
-import { RegisterUserInterface } from '@/interfaces/user.interface';
 
 import {
   StyledContainerInputs, StyledContainerRegister,
@@ -25,28 +18,24 @@ import { StyledHr } from '@/styles/shared.style';
 
 import ImagesConstants from '@/constants/images.constants';
 
-import { initialValues, validationSchema } from './formik.values';
-import tanslationsFieldsRegister from './translate';
+import { getValidationSchema, initialValues } from './formik.values';
+
+const steps = ['Dados da empresa', 'Dados de acesso', 'Monte seu pacote', 'Confirmar dados'];
 
 const Register: FC = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const { isMobile } = useIsMobile();
-
-  const { translate } = useTranslateContext();
-
-  const translationTitle = translate(translationsTitle);
-  const translationLogo = translate(translationsLogo);
-  const translationStep = translate(translationsStep);
-  const tanslationsRegister = translate(tanslationsFieldsRegister);
-
-  const callApi = async (path: string) => console.log(path);
-
-  const { formik, loading, containsError, getValue, handleValue } = useFormik<RegisterUserInterface>({
-    initialValues, validationSchema : validationSchema({ translations : tanslationsRegister }), callApi
+  const formik = useFormik({
+    initialValues,
+    validationSchema : getValidationSchema(activeStep),
+    enableReinitialize : true,
+    onSubmit : async (values) => {
+      setLoading(true);
+      console.log('values', values);
+      setLoading(false);
+    },
   });
-
-  const getTranslationKey = (step: number) => translationStep[`descriptionStep${step}` as keyof TranslationKeys];
 
   const changeStep = (changeStep: number) => setActiveStep(changeStep);
 
@@ -59,133 +48,34 @@ const Register: FC = () => {
           width={209}
           height={133}
           src={ImagesConstants.logo}
-          alt={translationLogo.alt}
+          alt="Imagem do logo da Simple System"
           description='Simple System'
         />
         <Title
           align='center'
-          title={translationTitle.title}
+          title="Simple System"
         />
         <StyledContentSteps>
           {
-            [1, 2, 3, 4].map((step) => (
+            steps.map((step, index) => (
               <Step
-                key={step}
+                key={index}
                 changeStep={changeStep}
                 activeStep={activeStep}
                 completeStep
-                lastStep={step === 4}
-                message={translationStep.messageWarning}
-                descriptionStep={getTranslationKey(step)}
-                isMobile={isMobile}
-                step={step}
+                lastStep={(index + 1) === 4}
+                message="Preencha os campos obrigatórios"
+                descriptionStep={step}
+                step={index + 1}
               />
             ))
           }
         </StyledContentSteps>
         <StyledContainerInputs>
           <StyledContentInputs>
-            <InputText
+            <CompanyForm
               formik={formik}
-              name='company.name'
-              placeholder='Nome da empresa'
-              type='text'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={50}
-            />
-            <InputText
-              formik={formik}
-              name='company.document'
-              placeholder='CPF/CNPJ'
-              type='number'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={20}
-            />
-            <InputText
-              formik={formik}
-              name='company.email'
-              placeholder='Email'
-              type='email'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={30}
-            />
-            <InputText
-              formik={formik}
-              name='company.phone'
-              placeholder='Telefone'
-              type='email'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={20}
-            />
-            <InputText
-              formik={formik}
-              name='company.address'
-              placeholder='Endereço'
-              type='text'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={30}
-            />
-            <InputText
-              formik={formik}
-              name='company.zip_code'
-              placeholder='CEP'
-              type='text'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              width={15}
-            />
-            <InputSelect
-              formik={formik}
-              name='company.state'
-              placeholder='Estado'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              valuesList={[
-                {
-                  key : 'SP', value : 'São Paulo'
-                },
-                {
-                  key : 'RJ', value : 'Rio de Janeiro'
-                },
-              ]}
-              width={13}
-            />
-            <InputSelect
-              formik={formik}
-              name='company.city'
-              placeholder='Cidade'
-              disabled={loading}
-              containsError={containsError}
-              getValue={getValue}
-              handleValue={handleValue}
-              valuesList={[
-                {
-                  key : 'VGS', value : 'Vargem Grande do Sul'
-                },
-                {
-                  key : 'SP', value : 'São Paulo'
-                },
-              ]}
-              width={21.7}
+              loading={loading}
             />
           </StyledContentInputs>
           <StyledHr />

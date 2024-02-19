@@ -3,10 +3,10 @@ import { io } from 'socket.io-client';
 
 import { ConstantsEnum } from '@/enums/constants.enum';
 
-import { UserInterface } from '@/interfaces/user.interface';
+import { User } from '@/interfaces/user.interface';
 
 interface WebsocketInterface {
-  user: UserInterface | null;
+  user: User | null;
   token: string;
 }
 
@@ -24,7 +24,7 @@ class Websocket {
     this.initializeOnSocket();
   }
 
-  public newUserOnline = (user: UserInterface) => {
+  public newUserOnline = (user: User) => {
     const { token } = this.dataShared;
     this.connection.emit(ConstantsEnum.NEW_USER_ONLINE,
       { id : user.id },
@@ -38,13 +38,13 @@ class Websocket {
     });
   };
 
-  private authenticatedEmitter = (user: UserInterface) => {
+  private authenticatedEmitter = (user: User) => {
     this.newUserOnline(user);
 
     this.authenticatedListeners(user);
   };
 
-  private authenticatedListeners = (_user: UserInterface) => {
+  private authenticatedListeners = (_user: User) => {
     // console.log('user: ', user);
     // this.onUsersOnline();
   };

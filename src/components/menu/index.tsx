@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import AppBar from '@/components/_appBar';
 import GenerateMenu from '@/components/menu/generateMenu';
 import HeaderMenu from '@/components/menu/headerMenu';
-import { Menu } from '@/components/menu/styles';
+import { Menu } from '@/components/menu/styles.menu';
 
 import { MenuEnum } from '@/enums/routes';
 

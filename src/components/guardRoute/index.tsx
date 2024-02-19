@@ -10,7 +10,7 @@ import { ActionConstants } from '@/constants/action.constants';
 
 import NotAuthorized from '../notAuthorized';
 import Loading from './Loading';
-import { Styled } from './styles';
+import { Styled } from './styles.guard-routes';
 
 interface GuardRouteProps extends Omit<Rule, 'action'> {
   children: ReactNode;
