@@ -15,7 +15,7 @@ export const StyledAppBarContainer = sw('section')`
     absolute
 `;
 
-export const StyledContentAppAbar = styled.section<{status: 'opened' | 'closed'}>`
+export const StyledContentAppAbar = styled.section<{$status: 'opened' | 'closed'}>`
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -38,9 +38,9 @@ export const StyledContentAppAbar = styled.section<{status: 'opened' | 'closed'}
     }
 `;
 
-export const StyledContentMenu = sw('section')<{status: 'opened' | 'closed'}>`
+export const StyledContentMenu = sw('section')<{$status: 'opened' | 'closed'}>`
     flex-col
-    ${({ status }) => (status === 'opened' ? 'w-56' : 'w-15')}
+    ${({ $status }) => ($status === 'opened' ? 'w-56' : 'w-15')}
     bg-gray-800
     items-start
     justify-center

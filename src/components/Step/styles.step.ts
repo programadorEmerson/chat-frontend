@@ -29,6 +29,7 @@ const StyledStep = styled.section<StepProps>`
         margin-left: 0.6rem;
         border: ${({ theme : { colors }, $active }) => ($active ? colors.warning : colors.primary)};
         background-color: ${({ theme : { colors }, $active }) => ($active ? colors.warning : colors.primary)};
+        transition: background-color 0.5s;
         ${debugMode}
         
         &:hover {

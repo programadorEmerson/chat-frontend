@@ -15,6 +15,9 @@ interface GeneralForm {
 
 const GeneralForm: FC<GeneralForm> = ({ formik, loading }) => {
   const { containsError, getValue } = useFormikChecks({ formik });
+  const document = getValue('company.document');
+  const documentType = document.length <= 14 ? 'CPF' : 'CNPJ';
+  const customPlaceholder = !document.length ? 'CPF ou CNPJ' : documentType;
 
   return (
     <Fragment>
@@ -31,7 +34,7 @@ const GeneralForm: FC<GeneralForm> = ({ formik, loading }) => {
       <InputText
         formik={formik}
         name='company.document'
-        placeholder='CPF ou CNPJ'
+        placeholder={customPlaceholder}
         type='text'
         disabled={loading}
         containsError={containsError}

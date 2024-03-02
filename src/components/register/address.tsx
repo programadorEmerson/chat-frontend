@@ -19,18 +19,18 @@ const AddressForm: FC<AddressForm> = ({ formik, loading }) => {
 
   const { containsError, getValue } = useFormikChecks({ formik });
 
+  const { values : { address : { state } } } = formik;
+
   useEffect(() => {
-    if (states.length > 0) {
+    if (cities.length > 0) formik.setFieldValue('address.city', cities[0].key);
+
+    if (states.length > 0 && !state) {
       selectState(states[0].key);
       formik.setFieldValue('address.state', states[0].key);
     }
-  }, [states]);
+  }, [states, cities]);
 
-  useEffect(() => {
-    if (formik.values.address.state) {
-      selectState(formik.values.address.state);
-    }
-  }, [formik.values.address.state]);
+  useEffect(() => selectState(state), [state]);
 
   return (
     <Fragment>
@@ -52,12 +52,42 @@ const AddressForm: FC<AddressForm> = ({ formik, loading }) => {
         containsError={containsError}
         getValue={getValue}
         valuesList={cities}
-        width={26.7}
+        width={30.7}
       />
       <InputText
         formik={formik}
         name='address.address'
         placeholder='Endereço'
+        type='text'
+        disabled={loading || loadingLocalization}
+        containsError={containsError}
+        getValue={getValue}
+        width={31}
+      />
+      <InputText
+        formik={formik}
+        name='address.number'
+        placeholder='N.º'
+        type='text'
+        disabled={loading || loadingLocalization}
+        containsError={containsError}
+        getValue={getValue}
+        width={20}
+      />
+      <InputText
+        formik={formik}
+        name='address.district'
+        placeholder='Bairro'
+        type='text'
+        disabled={loading || loadingLocalization}
+        containsError={containsError}
+        getValue={getValue}
+        width={45}
+      />
+      <InputText
+        formik={formik}
+        name='address.complement'
+        placeholder='Complemento'
         type='text'
         disabled={loading || loadingLocalization}
         containsError={containsError}

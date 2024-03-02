@@ -1,9 +1,21 @@
-import styled, { DefaultTheme, css } from 'styled-components';
+import styled, { DefaultTheme, css, keyframes } from 'styled-components';
 
+export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 export interface DebugStyledProps {
     $debug?: boolean;
     theme: DefaultTheme;
 }
+
+type RegisterProps = {
+  $debug?: boolean;
+};
 
 export const debugMode = ({ $debug }: DebugStyledProps) => css`
     border: ${({ theme : { colors } }) => ($debug && `1px solid ${colors.debugBorder}`)};
@@ -31,4 +43,22 @@ export const StyledHr = styled.hr`
     ${({ theme }) => theme.colors.defaultBorder} 10%,
     ${({ theme }) => theme.colors.defaultBorder} 90%,
     ${({ theme }) => theme.colors.background});
+`;
+
+export const StyledRowContainerWrapper = styled.section<RegisterProps>`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  ${debugMode}
+`;
+
+export const StyledColumnContainerWrapper = styled.section<RegisterProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  ${debugMode}
 `;

@@ -1,5 +1,1 @@
-import Text from './Text';
-
-const Input = { Text };
-
-export default Input;
+export { default as InputText } from './Text';

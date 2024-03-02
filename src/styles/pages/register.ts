@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-import { DebugStyledProps, debugMode } from '../shared.style';
+import { DebugStyledProps, debugMode, fadeIn } from '../shared.style';
 
 interface FooterProps extends DebugStyledProps {
-  align: 'left' | 'right';
+  $align: 'left' | 'right';
 }
 
 export const StyledContainerRegister = styled.form`
@@ -27,21 +27,41 @@ export const StyledContainerInputs = styled.section<DebugStyledProps>`
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
+  min-height: 350px;
+  position: relative;
 
   ${debugMode}
 `;
 
 export const StyledContentInputs = styled.section<DebugStyledProps>`
   display: flex;
-  align-items: self-start;
+  align-items: start;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   max-width: 1100px;
   gap: 0.5rem;
   padding: 1rem;
+  animation: ${fadeIn} 0.5s ease-in-out;
+
+  ${debugMode}
+
+  ${({ theme }) => theme.media.mobile} {
+    max-width: 100%;
+  }
+`;
+
+export const StyledContainerButtonActions = styled.section<DebugStyledProps>`
+  display: flex;
+  align-items: self-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1100px;
+  gap: 0.5rem;
+  animation: ${fadeIn} 0.5s ease-in-out;
 
   ${debugMode}
 
@@ -52,17 +72,20 @@ export const StyledContentInputs = styled.section<DebugStyledProps>`
 
 export const StyledFooterActions = styled.footer`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 1100px;
+  position: absolute;
+  bottom: 0;
 `;
 
 export const StyledSectionActions = styled.section<FooterProps>`
   display: flex;
   align-items: center;
-  justify-content: ${({ align }) => align};
-  width: 50%;
+  justify-content: ${({ $align }) => $align};
+  width: 40%;
   padding: 0 1rem;
 
   ${debugMode}

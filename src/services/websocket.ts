@@ -54,7 +54,6 @@ class Websocket {
   };
 
   private notAuthenticatedListeners = () => {
-    console.log('wws', 'estou aqui');
     this.connection.on('connection', () => {
       console.log('not authenticated');
     });

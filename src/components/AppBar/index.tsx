@@ -81,7 +81,7 @@ const AppBarApplication = () => {
         {showAsideMenu && (
           <div className="absolute">
             <StyledContentMenu
-              status={open ? 'opened' : 'closed'}
+              $status={open ? 'opened' : 'closed'}
               className='min-h-[calc(100vh-4rem)]'
             >
               {Routes
@@ -101,7 +101,7 @@ const AppBarApplication = () => {
           </div>
         )}
         <StyledContentAppAbar className='px-4'
-          status={open ? 'opened' : 'closed'}
+          $status={open ? 'opened' : 'closed'}
         >
           <div className='flex justify-center items-center'>
             {showAsideMenu && (

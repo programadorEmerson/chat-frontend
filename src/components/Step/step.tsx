@@ -1,30 +1,21 @@
 import React, { FC } from 'react';
 import { HiArrowNarrowRight } from 'react-icons/hi';
 
-import { ConstantsEnum } from '@/enums/constants.enum';
-
 import useIsMobile from '@/hooks/useDeviceType';
-
-import notify from '@/utils/notify';
 
 import StyledStep from './styles.step';
 
 type StepProps = {
   step: number;
   activeStep: number;
-  completeStep: boolean;
-  message: string;
   lastStep: boolean;
   descriptionStep: string;
-  changeStep: (changeStep: number) => void;
+  handleNavgateClick: (stepClicked: number) => void;
 };
 
 export const Step: FC<StepProps> = ({
-  step, activeStep, completeStep, message, lastStep, descriptionStep, changeStep,
+  step, activeStep, lastStep, descriptionStep, handleNavgateClick,
 }) => {
-  const { WARNING : type } = ConstantsEnum;
-  const toastId = String(step);
-
   const { isMobile } = useIsMobile();
 
   return (
@@ -33,14 +24,11 @@ export const Step: FC<StepProps> = ({
       $lastStep={lastStep}
     >
       <button
-        type='button'
+        type={activeStep === step ? 'button' : 'submit'}
+        id={`Step ${step}`}
         aria-label={`Step ${step}`}
-        onClick=
-          {() => {
-            if (activeStep === step) return;
-            if (completeStep) return changeStep(step);
-            notify({ type, message, toastId });
-          }}>
+        onClick={() => handleNavgateClick(step)}
+      >
         <span>
           {step}
         </span>
