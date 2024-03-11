@@ -47,6 +47,7 @@ export const StyledHr = styled.hr`
 
 export const StyledRowContainerWrapper = styled.section<RegisterProps>`
   display: flex;
+  position: relative;
   width: 100%;
   align-items: center;
   justify-content: center;

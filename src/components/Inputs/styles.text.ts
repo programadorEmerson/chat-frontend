@@ -1,4 +1,4 @@
-import styled, { DefaultTheme, css } from 'styled-components';
+import styled, { DefaultTheme } from 'styled-components';
 
 interface StyledFieldSetProps {
   $containsError: boolean;
@@ -8,39 +8,6 @@ interface StyledFieldSetProps {
   position: 'top' | 'bottom' | 'left' | 'right';
   width: number;
 }
-
-const borderColor = ({
-  theme,
-  $containsError,
-  $focus,
-}: Partial<StyledFieldSetProps>) => {
-  return $containsError
-    ? theme!.colors.error
-    : $focus
-      ? theme!.colors.primary
-      : theme!.colors.defaultBorder;
-};
-
-const borderPosition = ({ position }: Partial<StyledFieldSetProps>) => {
-  switch (position) {
-  case 'top':
-    return css`
-        border-top: 1px solid ${borderColor};
-      `;
-  case 'bottom':
-    return css`
-        border-bottom: 1px solid ${borderColor};
-      `;
-  case 'left':
-    return css`
-        border-left: 1px solid ${borderColor};
-      `;
-  default:
-    return css`
-        border-right: 1px solid ${borderColor};
-      `;
-  }
-};
 
 const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
   position: relative;
@@ -83,7 +50,7 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     padding: 14px 1rem;
     width: 100%;
     height: 3rem;
-    /* appearance: none; */
+    appearance: none;
     position: relative;
     border: 1px solid
       ${({ theme, $containsError }) =>
@@ -137,12 +104,9 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     align-items: center;
     justify-content: center;
     right: 0;
-    top: ${({ $containsError }) => ($containsError ? '32%' : '50%')};
+    top: ${({ $containsError }) => ($containsError ? '32%' : '52%')};
     transform: translateY(-50%);
-    background-color: ${({ theme, $containsError }) =>
-    $containsError
-      ? theme.colors.backgroundErrorContrast
-      : theme.colors.backgroundContrast};
+    background-color: transparent;
     border: none;
     color: ${({ theme }) => theme.colors.text};
     cursor: pointer;
@@ -150,10 +114,6 @@ const StyledFieldSet = styled.fieldset<Partial<StyledFieldSetProps>>`
     height: 3rem;
     width: 2rem;
     border-top-right-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
-    ${borderPosition({ position : 'top' })};
-    ${borderPosition({ position : 'right' })};
-    ${borderPosition({ position : 'bottom' })};
     transition: background-color 0.2s ease-in-out;
 
     & > svg {

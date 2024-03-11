@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from 'react';
+import React, { Fragment } from 'react';
 
 import { FormikProps } from 'formik';
 
@@ -8,12 +8,12 @@ import { CompanyRegister } from '@/interfaces/company.interface';
 
 import { InputText } from '../Inputs';
 
-interface GeneralForm {
-  formik: FormikProps<CompanyRegister>;
+interface GeneralForm<T extends CompanyRegister> {
+  formik: FormikProps<T>;
   loading: boolean;
 }
 
-const GeneralForm: FC<GeneralForm> = ({ formik, loading }) => {
+const GeneralForm = <T extends CompanyRegister>({ formik, loading }: GeneralForm<T>): JSX.Element => {
   const { containsError, getValue } = useFormikChecks({ formik });
   const document = getValue('company.document');
   const documentType = document.length <= 14 ? 'CPF' : 'CNPJ';

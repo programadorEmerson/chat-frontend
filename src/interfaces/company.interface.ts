@@ -16,6 +16,14 @@ export interface Address {
   state: string;
 }
 
+export interface Package {
+  id: string;
+  name: string;
+  description: string;
+  url_image: string;
+  price: number;
+}
+
 export interface General {
   name : string,
   document : string,
@@ -28,11 +36,13 @@ export interface CompanyRegister {
   user: UserRegister;
   company: General;
   plan_information: PlanInformation;
+  packages: Package[];
 }
 
-export interface UserRegister extends Omit<User, 'rules' | 'id' | 'company'> {
+export interface UserRegister extends Omit<User, 'rules' | 'id' | 'company' | 'url_image'> {
   password: string;
   confirmPassword: string;
+  fileImg: File | null;
 }
 
 export interface Company extends Omit<CompanyRegister, 'user'> { }

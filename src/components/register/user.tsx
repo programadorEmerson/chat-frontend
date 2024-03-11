@@ -1,26 +1,23 @@
-import React, { FC, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { FormikProps } from 'formik';
 
 import useFormikChecks from '@/hooks/useFormikChecks';
 
-import { UserRegister } from '@/interfaces/company.interface';
+import { CompanyRegister } from '@/interfaces/company.interface';
 
 import { StyledRowContainerWrapper } from '@/styles/shared.style';
 
 import { InputImage, InputText } from '../Inputs';
+import PasswordChecklist from '../passwordChecklist';
 
-interface UserForm {
-  formik: FormikProps<UserRegister>;
+interface UserForm<T extends CompanyRegister> {
+  formik: FormikProps<T>;
   loading: boolean;
 }
 
-// "email": "emerson@saturnino.com.br",
-// "password": "Emerson@2023",
-// "name": "Emerson L Saturnino",
-// "url_image": "https://avatars.githubusercontent.com/u/59292088?v=4",
-
-const UserForm: FC<UserForm> = ({ formik, loading }) => {
+const UserForm = <T extends CompanyRegister>({ formik, loading }: UserForm<T>): JSX.Element => {
+  const [focusInPassword, setFocusInPassword] = useState(false);
   const { containsError, getValue } = useFormikChecks({ formik });
 
   return (
@@ -31,6 +28,10 @@ const UserForm: FC<UserForm> = ({ formik, loading }) => {
           name='user.url_image'
           type='file'
           disabled={loading}
+        />
+        <PasswordChecklist
+          formik={formik}
+          $focusInPassword={focusInPassword}
         />
       </StyledRowContainerWrapper>
       <InputText
@@ -60,6 +61,7 @@ const UserForm: FC<UserForm> = ({ formik, loading }) => {
         type='password'
         disabled={loading}
         containsError={containsError}
+        setFocusInPassword={setFocusInPassword}
         getValue={getValue}
         width={25}
       />
@@ -67,6 +69,7 @@ const UserForm: FC<UserForm> = ({ formik, loading }) => {
         formik={formik}
         name='user.confirmPassword'
         placeholder='Confirme a senha'
+        setFocusInPassword={setFocusInPassword}
         type='password'
         disabled={loading}
         containsError={containsError}

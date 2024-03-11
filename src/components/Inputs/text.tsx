@@ -20,6 +20,7 @@ interface InputTextProps<T> {
     disabled: boolean;
     getValue: (reference: string) => string;
     containsError: (reference: string) => { errorMessage: string; containsError: boolean }
+    setFocusInPassword?: (value: boolean) => void;
 }
 
 const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Element => {
@@ -31,7 +32,10 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
   const { containsError, errorMessage } = props.containsError(props.name);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  const toggleFocus = () => setFocus(!focus);
+  const toggleFocus = () => {
+    setFocus(!focus);
+    if (props.setFocusInPassword) props.setFocusInPassword(!focus);
+  };
 
   const verifyMask = (value: string): string => {
     if (/(\.|^)zip_code$/.test(props.name)) return cepMask(value);
@@ -48,12 +52,17 @@ const InputText: <T>(props: InputTextProps<T>) => JSX.Element = (props): JSX.Ele
       width={Number(props.width)}
     >
       <input
+        autoComplete='off'
         name={props.name}
         disabled={disabled}
         onFocus={toggleFocus}
         value={verifyMask(getValue(props.name))}
         onChange={props.formik.handleChange}
-        onBlur={(e) => { props.formik.handleBlur(e); setFocus(false); }}
+        onBlur={(e) => {
+          props.formik.handleBlur(e);
+          setFocus(false);
+          if (props.setFocusInPassword) props.setFocusInPassword(false);
+        }}
         type={isPasswordField ? showPassword ? 'text' : 'password' : type}
       />
       {

@@ -33,4 +33,8 @@ export const StyledSimpleButton = styled.button<ButtonProps>`
     &:focus {
         outline: none;
     }
+
+    ${({ theme }) => theme.media.mobile} {
+        min-width: 100%;
+    }
 `;

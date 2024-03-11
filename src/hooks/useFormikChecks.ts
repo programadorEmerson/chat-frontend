@@ -10,11 +10,24 @@ const useFormikChecks = <T extends FormikValues>({ formik }: UseFormikCheckProps
     const errorMessage = `The reference "${reference}" does not exist in the formik values`;
 
     const value = reference.split('.').reduce((acc: any, key: string) => {
-      if (!(key in acc)) throw new Error(errorMessage);
-      return acc[key];
+      try {
+        if (!(key in acc)) throw new Error(errorMessage);
+        return acc[key];
+      } catch (error) {
+        return '';
+      }
     }, formik.values);
 
     return onlyCheck ? true : value;
+  };
+
+  const hasToutched = (reference: string) => {
+    const pathParts = reference.trim().split('.');
+
+    return pathParts.reduce((acc: any, key: string) => {
+      if (acc === undefined) return false;
+      return acc[key];
+    }, formik.touched) || false;
   };
 
   const containsError = (reference: string) => {
@@ -47,7 +60,7 @@ const useFormikChecks = <T extends FormikValues>({ formik }: UseFormikCheckProps
     return checksKeyExistsAndReturnValue({ reference, onlyCheck : false }) as unknown as string;
   };
 
-  return { containsError, getValue };
+  return { hasToutched, containsError, getValue };
 };
 
 export default useFormikChecks;

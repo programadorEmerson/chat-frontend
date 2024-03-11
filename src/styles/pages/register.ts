@@ -29,8 +29,16 @@ export const StyledContainerInputs = styled.section<DebugStyledProps>`
   align-items: center;
   justify-content: start;
   flex-direction: column;
-  min-height: 350px;
-  position: relative;
+
+  & > div {
+    min-height: 300px;
+    max-width: 1000px;
+    width: 100%;
+
+    ${({ theme }) => theme.media.mobile} {
+      min-height: 100%;
+    }
+  }
 
   ${debugMode}
 `;
@@ -67,6 +75,7 @@ export const StyledContainerButtonActions = styled.section<DebugStyledProps>`
 
   ${({ theme }) => theme.media.mobile} {
     max-width: 100%;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -77,8 +86,13 @@ export const StyledFooterActions = styled.footer`
   justify-content: center;
   width: 100%;
   max-width: 1100px;
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
+
+  ${({ theme }) => theme.media.mobile} {
+    position: relative;
+    margin-bottom: 2rem;
+  }
 `;
 
 export const StyledSectionActions = styled.section<FooterProps>`
@@ -92,5 +106,6 @@ export const StyledSectionActions = styled.section<FooterProps>`
 
   ${({ theme }) => theme.media.mobile} {
     flex-direction: column;
+    width: 100%;
   }
 `;

@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import { FormikProps } from 'formik';
 
@@ -7,14 +7,19 @@ import { InputSelect, InputText } from '@/components/Inputs';
 import useFormikChecks from '@/hooks/useFormikChecks';
 import { useLocalizationContext } from '@/hooks/useLocalization';
 
-import { CompanyRegister } from '@/interfaces/company.interface';
+// Importe a interface Address do local correto
+import { Address } from '@/interfaces/company.interface';
 
-interface AddressForm {
-  formik: FormikProps<CompanyRegister>;
+interface FormikAddressValues {
+  address: Address;
+}
+
+interface AddressFormProps<T extends FormikAddressValues> {
+  formik: FormikProps<T>;
   loading: boolean;
 }
 
-const AddressForm: FC<AddressForm> = ({ formik, loading }) => {
+const AddressForm = <T extends FormikAddressValues>({ formik, loading }: AddressFormProps<T>): JSX.Element => {
   const { cities, states, loadingLocalization, selectState } = useLocalizationContext();
 
   const { containsError, getValue } = useFormikChecks({ formik });

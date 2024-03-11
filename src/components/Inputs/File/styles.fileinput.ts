@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 
-import { debugMode } from '@/styles/shared.style';
+import { debugMode, fadeIn } from '@/styles/shared.style';
 
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ export interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const StyledContainerImageWrapper = styled.div<{ $debug?: boolean }>`
   display: flex;
+  position: relative;
   flex-direction: row;
   align-items: center;
   align-items: center;
@@ -39,7 +40,7 @@ export const StyledLabel = styled.label`
   display: inline-block;
   width: 130px;
   height: 130px;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: transparent;
   border-radius: 50%;
   background-size: cover;
   background-position: center;
@@ -136,4 +137,28 @@ export const StyledContainetControllers = styled.section`
   width: 90%;
   z-index: 1002;
   gap: 20px;
+`;
+
+export const StyledButtonRemoveImage = styled.button<{$showButton: boolean}>`
+  display: ${({ $showButton }) => ($showButton ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 5px;
+  background-color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.white};
+  border: ${({ theme }) => `1px solid ${theme.colors.white}`};
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1002;
+  transition: filter 0.2s;
+  width: 25px;
+  height: 25px;
+  animation: ${fadeIn} 0.5s ease-in-out;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
 `;
